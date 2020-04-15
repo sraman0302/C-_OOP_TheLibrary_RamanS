@@ -1,0 +1,9 @@
+{
+    "python.pythonPath": "C:\\Python27\\python.exe",
+    "files.associations": {
+        "iosfwd": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "iostream": "cpp"
+    }
+}
