@@ -10,16 +10,28 @@ void Book::display() {
   input_file.open("Book.txt");
   if (input_file) {
     while (input_file >> id >> name >> count) {
-      cout << id << '\t' << name << '\t' << count << '\n';
+      if (count != 0) {
+        cout << id << '\t' << name << '\t' << count << '\n';
+      } else {
+        continue;
+      }
     }
     input_file.close();
   }
 }
 
 void Book::input() {
+  ifstream cur_file;
+  cur_file.open("Book.txt");
+  while (cur_file >> id) {
+    bookID.push_back(id);
+  }
+  cur_file.close();
   ofstream ofile;
   ofile.open("Book.txt", ios::app);
   if (ofile) {
+    set_BookID();
+    cout << "Book ID: " << id;
     cout << "Enter your name:";
     cin >> name;
 
