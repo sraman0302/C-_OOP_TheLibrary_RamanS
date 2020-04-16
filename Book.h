@@ -10,7 +10,7 @@ class Book {
   int id;
 
  public:
-  int operator+(const Book& books);
+  vector<int> operator+(const Book& book);
   void borrow_book();
   void edit_book();
   void remove_book();

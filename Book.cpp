@@ -1,6 +1,16 @@
 #include "Book.h"
 
-int Book::operator+(const Book& books) {}
+vector<int> Book::operator+(const Book& book) {
+  ifstream input_file;
+  int ID;
+  input_file.open("members.txt");
+  if (input_file) {
+    while (input_file >> ID) {
+      bookID.push_back(ID);
+    }
+  }
+  return bookID;
+}
 void Book::borrow_book() {}
 void Book::edit_book() {}
 void Book::remove_book() {}
@@ -21,12 +31,6 @@ void Book::display() {
 }
 
 void Book::input() {
-  ifstream cur_file;
-  cur_file.open("Book.txt");
-  while (cur_file >> id) {
-    bookID.push_back(id);
-  }
-  cur_file.close();
   ofstream ofile;
   ofile.open("Book.txt", ios::app);
   if (ofile) {
@@ -45,7 +49,7 @@ void Book::input() {
 }
 void Book::set_BookID() {
   srand(time(nullptr));
-
+  operator+(book);
   while (true) {
     cout << "Is the following book intended for an undergraduate student "
             "(y/n): ";
