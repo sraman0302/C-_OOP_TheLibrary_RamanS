@@ -5,8 +5,8 @@ class Book {
  private:
   string name;
   string author;
-  string count;
-  vector<string> books;
+  int count;
+  vector<int> bookID;
   int id;
 
  public:
@@ -17,7 +17,7 @@ class Book {
   void return_book();
   void display();
   void input();
-  void set_author();
+  void set_BookID();
 };
 
 #endif  // BOOK_H_INCLUDED
