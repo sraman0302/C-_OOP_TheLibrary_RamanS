@@ -58,29 +58,69 @@ void Book::borrow_book() {
     vector<int> book_code;
     vector<string> author_name;
     vector<int> book_quant;
-
+    int m;
     if (input_file) {
-      n = 0, found = 0;
+      found = 0;
       while (input_file >> id >> name >> author >> count) {
-        if (id == bookcode) {
-          bookpos = n;
+        if ((id == bookcode) && (count > 0)) {
+          bookpos = m;
           found = 1;
         }
         book_name.push_back(name);
         book_quant.push_back(count);
         book_code.push_back(id);
         author_name.push_back(author);
+        m++;
       }
       input_file.close();
     }
-    if (found = 1) {
-      cout << "Book code" << book_code[pos] << " labelled" << book_name[pos]
-           << "issued to "
-           << "User ID: ";
+    if (found == 1) {
+      cout << "Book code" << book_code[bookpos] << " labelled"
+           << book_name[bookpos] << "issued to "
+           << "User ID: " << members_id[pos] << " Named:" << members_name[pos]
+           << endl;
+      members_book[pos] == book_name[bookpos];
+      cout << "Book due to be returned in 3 hours" << endl;
+      book_quant[bookpos]--;
+
+      ofstream member_update;
+      member_update.open("members.txt");
+      if (member_update) {
+        int i;
+        for (i = 0; i < n; i++) {
+          member_update << members_id[i];
+          member_update << members_name[i];
+          member_update << ages[i];
+          member_update << members_book[i];
+          member_update << endl;
+        }
+        member_update.close();
+      }
+      ofstream book_update;
+      book_update.open("Book.txt");
+      if (book_update) {
+        int i;
+        for (i = 0; i < m; i++) {
+          book_update << book_code[i];
+          book_update << book_name[i];
+          book_update << author_name[i];
+          book_update << book_quant[i];
+          book_update << endl;
+        }
+        book_update.close();
+      }
+    } else {
+      cout << "Invalid entry" << endl;
     }
+  } else if (borrow == 0) {
+    cout
+        << "Error.\n Please make sure you have no books due and intending to a "
+           "book available at the library."
+        << endl;
   }
 }
 void Book::return_book() {}
+// edit is friend class
 void Book::edit_book() {}
 void Book::remove_book() {}
 
