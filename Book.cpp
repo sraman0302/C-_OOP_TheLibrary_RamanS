@@ -11,17 +11,58 @@ vector<int> Book::operator+(const Book& book) {
   }
   return bookID;
 }
-void Book::borrow_book() {}
+void Book::borrow_book() {
+  int found = 0, pos, n = 0, member_id;
+  cout << "Enter 4-digit code of user: ";
+  cin >> member_id;
+  vector<int> members_id;
+  vector<string> members_name;
+  vector<string> members_book;
+  ifstream member_file;
+  string memname, membook;
+  int memid, memage;
+  member_file.open("members.txt");
+  if (member_file) {
+    while (member_file >> memid >> name >> memage >> membook) {
+      if (memid == member_id) {
+        pos = n;
+      }
+      members_id.push_back(memid);
+      members_name.push_back(name);
+      n++;
+    }
+  }
+  ifstream input_file;
+  input_file.open("Book.txt");
+  vector<string> book_name;
+  vector<int> book_code;
+  vector<string> author_name;
+  vector<int> book_quant;
+  if (input_file) {
+    while (input_file >> id >> name >> count) {
+      if (count != 0) {
+        book_name.push_back(name);
+        book_quant.push_back(count);
+        book_code.push_back(id);
+        author_name.push_back(author);
+      } else {
+        continue;
+      }
+    }
+    input_file.close();
+  }
+}
+void Book::return_book() {}
 void Book::edit_book() {}
 void Book::remove_book() {}
-void Book::return_book() {}
+
 void Book::display() {
   ifstream input_file;
   input_file.open("Book.txt");
   if (input_file) {
-    while (input_file >> id >> name >> count) {
+    while (input_file >> id >> name >> author >> count) {
       if (count != 0) {
-        cout << id << '\t' << name << '\t' << count << '\n';
+        cout << id << '\t' << name << '\t' << author << '\t' << count << '\n';
       } else {
         continue;
       }
@@ -49,7 +90,7 @@ void Book::input() {
 }
 void Book::set_BookID() {
   srand(time(nullptr));
-  operator+(book);
+  // operator+(Book);
   while (true) {
     cout << "Is the following book intended for an undergraduate student "
             "(y/n): ";
