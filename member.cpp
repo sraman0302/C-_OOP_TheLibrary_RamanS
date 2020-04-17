@@ -57,6 +57,7 @@ void Member::input() {
     cout << "Enter age";
     cin >> age;
     ofile << age;
+    ofile << " ";
     ofile << endl;
   }
 }
