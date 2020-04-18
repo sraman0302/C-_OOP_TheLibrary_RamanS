@@ -29,15 +29,16 @@ void Book::borrow_book() {
         pos = n;
         found = 1;
       }
-      if (membook == " ") {
-        borrow = 1;
-      }
+
       ages.push_back(memage);
       members_id.push_back(memid);
       members_name.push_back(name);
       members_book.push_back(membook);
       n++;
     }
+  }
+  if (members_book[pos] == " ") {
+    borrow = 1;
   }
   member_file.close();
   if (borrow == 1) {
@@ -162,7 +163,7 @@ void Book::return_book() {
     }
     cout << "Do you want the book ID from the list of books for easier return?";
     cin >> ch;
-    if (ch = 'y') {
+    if (ch == 'y') {
       display();
     }
     cout << "\nEnter code of book intending to borrow for 3 hours (Limit 1 per "
@@ -236,9 +237,69 @@ void Book::return_book() {
          << endl;
   }
 }
-// edit is friend class
-void Book::edit_book() {}
-void Book::remove_book() {}
+
+void Book::remove_book() {
+  char ch;
+  cout << "Do you want to display the list books? (y,n)";
+  cin >> ch;
+  if (ch == 'y') {
+    display();
+  }
+  cout << "\nEnter code of book intending to delete from database: ";
+  int bookcode, bookpos, found;
+  cin >> bookcode;
+
+  ifstream input_file;
+  input_file.open("Book.txt");
+  vector<string> book_name;
+  vector<int> book_code;
+  vector<string> author_name;
+  vector<int> book_quant;
+  int m;
+  if (input_file) {
+    found = 0;
+    while (input_file >> id >> name >> author >> count) {
+      if (id == bookcode) {
+        bookpos = m;
+        found = 1;
+      }
+      book_name.push_back(name);
+      book_quant.push_back(count);
+      book_code.push_back(id);
+      author_name.push_back(author);
+      m++;
+    }
+    input_file.close();
+  }
+  if (found == 1) {
+    // books.erase(books.begin() + pos);
+    cout << "Book code" << book_code[bookpos] << " labelled"
+         << book_name[bookpos] << "has been erased successfully. ";
+
+    book_quant.erase(book_quant.begin() + bookpos);
+    book_name.erase(book_name.begin() + bookpos);
+    book_code.erase(book_code.begin() + bookpos);
+    author_name.erase(author_name.begin + bookpos);
+
+    ofstream book_update;
+    book_update.open("Book.txt");
+    if (book_update) {
+      int i;
+      for (i = 0; i < m; i++) {
+        book_update << book_code[i];
+        book_update << book_name[i];
+        book_update << author_name[i];
+        book_update << book_quant[i];
+        book_update << endl;
+      }
+      book_update.close();
+    }
+  }
+
+  else if (found == 0) {
+    cout << "Error.\n Please make sure you have the book exists" << endl;
+  }
+}
 
 void Book::display() {
   ifstream input_file;
@@ -301,3 +362,5 @@ void Book::set_BookID() {
     }
   }
 }
+// edit is friend class
+void Book::edit_book() {}
