@@ -3,7 +3,7 @@
 vector<int> Book::operator+(const Book& book) {
   ifstream input_file;
   int ID;
-  input_file.open("members.txt");
+  input_file.open("Member.txt");
   if (input_file) {
     while (input_file >> ID) {
       bookID.push_back(ID);
@@ -22,7 +22,7 @@ void Book::borrow_book() {
   ifstream member_file;
   string memname, membook;
   int memid, memage;
-  member_file.open("members.txt");
+  member_file.open("Member.txt");
   if (member_file) {
     while (member_file >> memid >> name >> memage >> membook) {
       if (memid == member_id) {
@@ -86,7 +86,7 @@ void Book::borrow_book() {
       book_quant[bookpos]--;
 
       ofstream member_update;
-      member_update.open("members.txt");
+      member_update.open("Member.txt");
       if (member_update) {
         int i;
         for (i = 0; i < n; i++) {
@@ -132,7 +132,7 @@ void Book::return_book() {
   ifstream member_file;
   string memname, membook;
   int memid, memage;
-  member_file.open("members.txt");
+  member_file.open("Member.txt");
   if (member_file) {
     while (member_file >> memid >> name >> memage >> membook) {
       if (memid == member_id) {
@@ -203,7 +203,7 @@ void Book::return_book() {
       book_quant[bookpos]++;
 
       ofstream member_update;
-      member_update.open("members.txt");
+      member_update.open("Member.txt");
       if (member_update) {
         int i;
         for (i = 0; i < n; i++) {
@@ -279,7 +279,7 @@ void Book::remove_book() {
     book_quant.erase(book_quant.begin() + bookpos);
     book_name.erase(book_name.begin() + bookpos);
     book_code.erase(book_code.begin() + bookpos);
-    author_name.erase(author_name.begin + bookpos);
+    author_name.erase(author_name.begin() + bookpos);
 
     ofstream book_update;
     book_update.open("Book.txt");
@@ -361,6 +361,78 @@ void Book::set_BookID() {
       }
     }
   }
-}
-// edit is friend class
-void Book::edit_book() {}
+} /*
+ // edit is friend class
+ void edit_book(Book book) {
+   int getid, found = 0, n = 0, i, pos;
+   vector<string> bookname;
+   vector<string> bookauthor;
+   vector<int> bookcount;
+   vector<int> bookID;
+   cout << "Enter ID of undergraduate student:";
+   cin >> getid;
+   ifstream input_file;
+   string book;
+   input_file.open("Member.txt");
+   if (input_file) {
+     while (input_file >> book.id >> book.name >> book.author >> book.count) {
+       bookID.push_back(book.id);
+       if (getid == book.id) {
+         pos = n;
+         found = 1;
+
+         bookname.push_back(book.name);
+         bookauthor.push_back(book.author);
+         bookcount.push_back(book.count);
+         n++;
+       }
+     }
+
+     if (found == 1) {
+       cout << "Do you want to edit the book title ?(y/n)";
+       char ch;
+       cin >> ch;
+       if (ch == 'y') {
+         cout << "Enter new title: ";
+         cin >> bookname[pos];
+         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+       } else {
+         cout << endl;
+       }
+       cout << "Do you want to edit your age?(y/n)";
+
+       cin >> ch;
+       if (ch == 'y') {
+         cout << "\nEdit author name:";
+         cin >> bookauthor[pos];
+         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+       } else {
+         cout << endl;
+       }
+       cout << "Do you want to update the stock?(y/n)";
+
+       cin >> ch;
+       if (ch == 'y') {
+         cout << "\nEnter new count value:";
+         cin >> bookcount[pos];
+         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+       } else {
+         cout << endl;
+       }
+     } else {
+       cout << "Member not found";
+     }
+   }
+
+   input_file.close();
+   ofstream up_file;
+   up_file.open("Book.txt");
+   for (i = 0; i < n; i++) {
+     up_file << bookID[i];
+     up_file << bookname[i];
+     up_file << bookauthor[i];
+     up_file << bookcount[i];
+     up_file << endl;
+   }
+   up_file.close();
+ }*/

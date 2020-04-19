@@ -12,7 +12,7 @@ class Book {
  public:
   vector<int> operator+(const Book& book);
   void borrow_book();
-  void edit_book();
+  friend void edit_book(Book book);
   void remove_book();
   void return_book();
   void display();
