@@ -3,7 +3,59 @@
 #include "Member.h"
 #include "Undergraduate.h"
 
-int main(void) { cout << "hi"; }
+int main(void) {
+  Book b;
+  Member m;
+  Undergraduate ug;
+  Graduate grad;
+  bool mainchoice = true;
+  while (mainchoice == true) {
+    cout << endl << endl;
+    cout << "==============================" << endl;
+    cout << "\t  Main Menu" << endl;
+    cout << "==============================" << endl;
+    cout << "1. Library Members" << endl;
+    cout << "2. Library Books" << endl;
+    cout << "3. Exit the menu" << endl;
+    cout << "Enter your choice: ";
+    int ch;
+    cin >> ch;
+
+    if (ch == 1) {
+      cout << "\n1: Enter a new member";
+      cout << "\n2: Display current "
+              "members";
+      cout << "\n3: Edit the details of an existing member";
+      cout << "\n4: Remove a member";
+      cout << "5. Exit section" << endl;
+      int memch;
+      cout << "\nEnter your choice: ";
+      cin >> memch;
+
+      if (memch == 1) {
+        b.input();
+
+      } else if (memch == 2) {
+        cout << "1. Display all Members" << endl;
+        cout << "2.Display Undergraduate Members" << endl;
+        cout << "3. Display Graduate Members" << endl;
+        cout << "4. Exit section" << endl;
+        int disch;
+        cout << "Display choice: ";
+        cin >> disch;
+        if (disch == 1) {
+          b.display();
+        } else if (disch == 2) {
+          ug.stddisplay();
+        } else if (disch == 3) {
+          grad.grad_display();
+        }
+      } else if (memch == 4) {
+        cout << "Section exit" << endl;
+      }
+    }
+  }
+}
 
 void edit_book(Book book) {
   int getid, found = 0, n = 0, i, pos;
