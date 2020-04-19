@@ -3,7 +3,7 @@ string Graduate::get_gradname() { return name; }
 void Graduate::grad_display() {
   ifstream input_file;
   string book;
-  input_file.open("members.txt");
+  input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
       if (id >= 5000) {
@@ -27,7 +27,7 @@ void Graduate::edit_grad() {
   cin >> getid;
   ifstream input_file;
   string book;
-  input_file.open("members.txt");
+  input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
       all_ID.push_back(id);
@@ -90,7 +90,7 @@ void Graduate::remove_gradmember() {
   cin >> getid;
   ifstream input_file;
   string book;
-  input_file.open("members.txt");
+  input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
       all_ID.push_back(id);
@@ -118,7 +118,7 @@ void Graduate::remove_gradmember() {
 
   input_file.close();
   ofstream up_file;
-  up_file.open("members.txt");
+  up_file.open("Members.txt");
   for (i = 0; i < n; i++) {
     up_file << all_ID[i];
     up_file << names[i];

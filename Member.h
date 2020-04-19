@@ -15,7 +15,7 @@ class Member {
  protected:
   string name;
   int age, id;
-  vector<int> membersID;
+  vector<int> membersID{};
 
  private:
   static int count;

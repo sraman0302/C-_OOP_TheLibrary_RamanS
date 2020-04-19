@@ -3,7 +3,7 @@ string Undergraduate::get_stdname() { return name; }
 void Undergraduate::stddisplay() {
   ifstream input_file;
   string book;
-  input_file.open("members.txt");
+  input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
       if (id <= 4999) {
@@ -26,7 +26,7 @@ void Undergraduate::edit_std() {
   cin >> getid;
   ifstream input_file;
   string book;
-  input_file.open("members.txt");
+  input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
       all_ID.push_back(id);
@@ -69,7 +69,7 @@ void Undergraduate::edit_std() {
 
   input_file.close();
   ofstream up_file;
-  up_file.open("members.txt");
+  up_file.open("Members.txt");
   for (i = 0; i < n; i++) {
     up_file << all_ID[i];
     up_file << names[i];
@@ -89,7 +89,7 @@ void Undergraduate::remove_member() {
   cin >> getid;
   ifstream input_file;
   string book;
-  input_file.open("members.txt");
+  input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
       all_ID.push_back(id);
@@ -117,7 +117,7 @@ void Undergraduate::remove_member() {
 
   input_file.close();
   ofstream up_file;
-  up_file.open("members.txt");
+  up_file.open("Members.txt");
   for (i = 0; i < n; i++) {
     up_file << all_ID[i];
     up_file << names[i];

@@ -4,12 +4,12 @@
 #include "Undergraduate.h"
 
 int main(void) {
-  Book b;
-  Member m;
-  Undergraduate ug;
-  Graduate grad;
   bool mainchoice = true;
   while (mainchoice == true) {
+    Book b;
+    Member m;
+    Undergraduate ug;
+    Graduate grad;
     cout << endl << endl;
     cout << "==============================" << endl;
     cout << "\t  Main Menu" << endl;
@@ -20,20 +20,20 @@ int main(void) {
     cout << "Enter your choice: ";
     int ch;
     cin >> ch;
-
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     if (ch == 1) {
       cout << "\n1: Enter a new member";
       cout << "\n2: Display current "
               "members";
       cout << "\n3: Edit the details of an existing member";
       cout << "\n4: Remove a member";
-      cout << "5. Exit section" << endl;
+      cout << "\n5. Exit section" << endl;
       int memch;
       cout << "\nEnter your choice: ";
       cin >> memch;
-
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
       if (memch == 1) {
-        b.input();
+        m.input();
 
       } else if (memch == 2) {
         cout << "1. Display all Members" << endl;
@@ -43,6 +43,7 @@ int main(void) {
         int disch;
         cout << "Display choice: ";
         cin >> disch;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (disch == 1) {
           b.display();
         } else if (disch == 2) {
@@ -62,6 +63,7 @@ int main(void) {
         int edch;
         cout << "Display choice: ";
         cin >> edch;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (edch == 1) {
           ug.edit_std();
         } else if (edch == 2) {
@@ -79,6 +81,7 @@ int main(void) {
         int remch;
         cout << "Display choice: ";
         cin >> remch;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (remch == 1) {
           ug.remove_member();
         } else if (remch == 2) {

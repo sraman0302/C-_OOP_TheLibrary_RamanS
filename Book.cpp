@@ -3,7 +3,7 @@
 vector<int> Book::operator+(const Book& book) {
   ifstream input_file;
   int ID;
-  input_file.open("Member.txt");
+  input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> ID) {
       bookID.push_back(ID);
@@ -22,7 +22,7 @@ void Book::borrow_book() {
   ifstream member_file;
   string memname, membook;
   int memid, memage;
-  member_file.open("Member.txt");
+  member_file.open("Members.txt");
   if (member_file) {
     while (member_file >> memid >> name >> memage >> membook) {
       if (memid == member_id) {
@@ -86,7 +86,7 @@ void Book::borrow_book() {
       book_quant[bookpos]--;
 
       ofstream member_update;
-      member_update.open("Member.txt");
+      member_update.open("Members.txt");
       if (member_update) {
         int i;
         for (i = 0; i < n; i++) {
@@ -132,7 +132,7 @@ void Book::return_book() {
   ifstream member_file;
   string memname, membook;
   int memid, memage;
-  member_file.open("Member.txt");
+  member_file.open("Members.txt");
   if (member_file) {
     while (member_file >> memid >> name >> memage >> membook) {
       if (memid == member_id) {
@@ -203,7 +203,7 @@ void Book::return_book() {
       book_quant[bookpos]++;
 
       ofstream member_update;
-      member_update.open("Member.txt");
+      member_update.open("Members.txt");
       if (member_update) {
         int i;
         for (i = 0; i < n; i++) {
