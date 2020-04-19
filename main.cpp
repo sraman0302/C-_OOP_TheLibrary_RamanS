@@ -49,9 +49,49 @@ int main(void) {
           ug.stddisplay();
         } else if (disch == 3) {
           grad.grad_display();
+        } else if (disch == 4) {
+          cout << "Section exit" << endl;
+        } else {
+          cout << "Incorrect Choice" << endl;
+        }
+      } else if (memch == 3) {
+        cout << "1. Edit Undergradute Member" << endl;
+        cout << "2.Display Graduate Members" << endl;
+
+        cout << "3. Exit section" << endl;
+        int edch;
+        cout << "Display choice: ";
+        cin >> edch;
+        if (edch == 1) {
+          ug.edit_std();
+        } else if (edch == 2) {
+          grad.edit_grad();
+        } else if (edch == 3) {
+          cout << "Section exit" << endl;
+        } else {
+          cout << "Incorrect Choice" << endl;
         }
       } else if (memch == 4) {
-        cout << "Section exit" << endl;
+        cout << "1. Remove Undergradute Member" << endl;
+        cout << "2. Remove Graduate Member" << endl;
+
+        cout << "3. Exit section" << endl;
+        int remch;
+        cout << "Display choice: ";
+        cin >> remch;
+        if (remch == 1) {
+          ug.remove_member();
+        } else if (remch == 2) {
+          grad.remove_gradmember();
+        } else if (remch == 3) {
+          cout << "Section exit" << endl;
+        } else {
+          cout << "Incorrect Choice" << endl;
+        }
+      } else if (memch == 5) {
+        cout << "\nMember Section Exit" << endl;
+      } else {
+        cout << "\nInvalid Choice" << endl;
       }
     }
   }
