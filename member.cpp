@@ -38,7 +38,8 @@ void Member::set_ID() {
 void Member::display() {
   ifstream input_file;
   input_file.open("Members.txt");
-  if (input_file) {
+  if (input_file.is_open()) {
+    cout << "Dis ";
     while (input_file >> id >> name >> age) {
       cout << id << '\t' << name << '\t' << age << '\n';
     }
@@ -48,29 +49,30 @@ void Member::display() {
 
 void Member::input() {
   ++count;
-  // cout << "HI";
   ofstream ofile;
   ofile.open("Members.txt", ios::app);
-  // f (ofile) {
-  set_ID();
-  cout << "Unique ID Code" << id << endl;
-  ofile << id;
-  cout << "Enter your name:";
-  cin >> name;
+  if (ofile) {
+    cout << "Hi";
+    set_ID();
+    cout << "Unique ID Code" << id << endl;
+    ofile << id;
+    cout << "Enter your name:";
+    cin >> name;
 
-  cin.ignore(numeric_limits<streamsize>::max(), '\n');
-  ofile << name;
-  cout << "Enter age";
-  cin >> age;
-  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    ofile << name;
+    cout << "Enter age";
+    cin >> age;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-  ofile << age;
-  ofile << " ";
-  ofile << endl;
-  // } else {
-  cout << "Error" << endl;
-  ofile.close();
-  // }
+    ofile << age;
+    ofile << " ";
+    ofile << endl;
+    ofile.close();
+  } else {
+    cout << "Error" << endl;
+    ofile.close();
+  }
 }
 vector<int> Member::operator+(const Member& member) {
   ifstream input_file;

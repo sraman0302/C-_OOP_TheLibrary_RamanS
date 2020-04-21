@@ -21,6 +21,7 @@ int main(void) {
     int ch;
     cin >> ch;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
     if (ch == 1) {
       cout << "\n1: Enter a new member";
       cout << "\n2: Display current "
@@ -96,8 +97,44 @@ int main(void) {
       } else {
         cout << "\nInvalid Choice" << endl;
       }
+    } else if (ch == 2) {
+      cout << "\n1. Display books with details" << endl;
+      cout << "2: Borrow a book" << endl;
+      cout << "3: Return a book" << endl;
+      cout << "4. Add a book" << endl;
+      cout << "5.Remove a book" << endl;
+      cout << "6.Edit the details of a book" << endl;
+      cout << "7. Exit section" << endl;
+      int bookch;
+      cout << "Enter your choice: ";
+      cin >> bookch;
+      if (bookch == 1) {
+        b.display();
+
+      } else if (bookch == 2) {
+        b.borrow_book();
+      } else if (bookch == 3) {
+        b.return_book;
+      } else if (bookch == 4) {
+        b.input();
+      } else if (bookch == 5) {
+        b.remove_book();
+
+      } else if (bookch == 6) {
+        edit_book(b);
+      } else if (bookch == 7) {
+        cout << "Exit section" << endl;
+      } else {
+        cout << "Invalid Choice" << endl;
+      }
+    } else if (ch == 3) {
+      cout << "Exit Library " << endl;
+      break;
+    } else {
+      cout << "Invalid choice" << endl;
     }
   }
+  return 0;
 }
 
 void edit_book(Book book) {
