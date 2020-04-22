@@ -2,10 +2,8 @@
 #include "Graduate.h"
 #include "Member.h"
 #include "Undergraduate.h"
-
 int main(void) {
-  bool mainchoice = true;
-  while (mainchoice == true) {
+  while (true) {
     Book b;
     Member m;
     Undergraduate ug;
@@ -46,7 +44,7 @@ int main(void) {
         cin >> disch;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (disch == 1) {
-          b.display();
+          m.display();
         } else if (disch == 2) {
           ug.stddisplay();
         } else if (disch == 3) {
@@ -114,7 +112,7 @@ int main(void) {
       } else if (bookch == 2) {
         b.borrow_book();
       } else if (bookch == 3) {
-        b.return_book;
+        b.return_book();
       } else if (bookch == 4) {
         b.input();
       } else if (bookch == 5) {

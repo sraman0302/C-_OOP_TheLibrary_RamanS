@@ -38,12 +38,17 @@ void Member::set_ID() {
 void Member::display() {
   ifstream input_file;
   input_file.open("Members.txt");
-  if (input_file.is_open()) {
-    cout << "Dis ";
-    while (input_file >> id >> name >> age) {
-      cout << id << '\t' << name << '\t' << age << '\n';
+  string book;
+  cout << "====================================" << endl;
+  cout << "ID\tSTUDENT NAME\tAGE\tBook Borrowed" << endl;
+  cout << "====================================" << endl;
+  if (input_file) {
+    while (input_file >> id >> name >> age >> book) {
+      cout << id << '\t' << name << '\t' << age << '\t' << book << endl;
     }
     input_file.close();
+  } else {
+    cout << "Error" << endl;
   }
 }
 
@@ -52,7 +57,7 @@ void Member::input() {
   ofstream ofile;
   ofile.open("Members.txt", ios::app);
   if (ofile) {
-    cout << "Hi";
+    ofile << endl;
     set_ID();
     cout << "Unique ID Code" << id << endl;
     ofile << id;
@@ -60,13 +65,14 @@ void Member::input() {
     cin >> name;
 
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    ofile << " ";
     ofile << name;
     cout << "Enter age";
     cin >> age;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    ofile << age;
     ofile << " ";
+    ofile << age;
+    ofile << "  Nill";
     ofile << endl;
     ofile.close();
   } else {
@@ -77,7 +83,7 @@ void Member::input() {
 vector<int> Member::operator+(const Member& member) {
   ifstream input_file;
   int ID;
-  input_file.open("members.txt");
+  input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> ID) {
       membersID.push_back(ID);
