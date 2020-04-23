@@ -20,10 +20,9 @@ void Graduate::grad_display() {
 void Graduate::edit_grad() {
   int getid, n = 0, i;
   char ch;
-  vector<string> books;
-  vector<string> names;
-  vector<int> ages;
-  vector<int> all_ID;
+  ofstream temp_file;
+  temp_file.open("Temp.txt");
+
   cout << "Enter ID of Graduate student:";
   cin >> getid;
   if (getid < 5000) {
@@ -34,7 +33,6 @@ void Graduate::edit_grad() {
   input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
-      all_ID.push_back(id);
       if ((getid == id) && (getid >= 5000)) {
         cout << "User " << id << "\nName: " << name
              << "\nFound. Do you want to edit their record?(y/n): ";
@@ -66,42 +64,36 @@ void Graduate::edit_grad() {
         } else {
           cout << "Error. User not Found or incorrect user entry." << endl;
         }
+        temp_file << id;
+        temp_file << " ";
+        temp_file << name;
+        temp_file << " ";
+
+        temp_file << age;
+        temp_file << " ";
+
+        temp_file << book;
+        temp_file << endl;
+        n++;
       }
-      books.push_back(book);
-      names.push_back(name);
-      ages.push_back(age);
-      n++;
     }
-  }
 
-  input_file.close();
-  ofstream up_file;
-  up_file.open("Members.txt");
-  for (i = 0; i < n; i++) {
-    up_file << all_ID[i];
-    up_file << " ";
-    up_file << names[i];
-    up_file << " ";
-    up_file << ages[i];
-    up_file << " ";
-    up_file << books[i];
-
-    up_file << endl;
+    input_file.close();
+    temp_file.close();
+    remove("Members.txt");
+    rename("Temp.txt", "Members.txt");
   }
-  up_file.close();
 }
 void Graduate::remove_gradmember() {
   int getid, n = 0, i;
   bool found = false;
-  vector<string> books;
-  vector<string> names;
-  vector<int> ages;
-  vector<int> all_ID;
-  cout << "Enter ID of Graduate student to be deleted:";
+  ofstream temp_file;
+  temp_file.open("Temp.txt");
+  cout << "Enter ID of undergraduate student to be deleted:";
   cin >> getid;
   ifstream input_file;
   string book;
-  if (getid <= 5000) {
+  if (getid < 5000) {
     cout << "Incorrect Section" << endl;
   }
 
@@ -122,31 +114,26 @@ void Graduate::remove_gradmember() {
         found = true;
         continue;
       } else {
-        all_ID.push_back(id);
-        books.push_back(book);
-        names.push_back(name);
-        ages.push_back(age);
+        temp_file << id;
+        temp_file << " ";
+        temp_file << name;
+        temp_file << " ";
+
+        temp_file << age;
+        temp_file << " ";
+
+        temp_file << book;
+        temp_file << endl;
         n++;
       }
     }
   }
 
   input_file.close();
+  temp_file.close();
   if (!found) {
     cout << "Record Not Found" << endl;
   }
-  ofstream up_file;
-  up_file.open("Members.txt");
-  for (i = 0; i < n; i++) {
-    up_file << all_ID[i];
-    up_file << " ";
-    up_file << names[i];
-    up_file << " ";
-    up_file << ages[i];
-    up_file << " ";
-    up_file << books[i];
-
-    up_file << endl;
-  }
-  up_file.close();
+  remove("Members.txt");
+  rename("Temp.txt", "Members.txt");
 }

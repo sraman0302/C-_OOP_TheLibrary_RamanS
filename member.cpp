@@ -60,7 +60,7 @@ void Member::input() {
     ofile << endl;
     set_ID();
     if (id != 0) {
-      cout << "Unique ID Code" << id << endl;
+      cout << "Unique ID Code: " << id << endl;
       ofile << id;
       cout << "Enter your name:";
       cin >> name;
@@ -68,7 +68,7 @@ void Member::input() {
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
       ofile << " ";
       ofile << name;
-      cout << "Enter age";
+      cout << "Enter age: ";
       cin >> age;
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
       ofile << " ";

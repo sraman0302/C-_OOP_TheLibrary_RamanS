@@ -262,6 +262,24 @@ void Book::remove_book() {
       if (id == bookcode) {
         bookpos = m;
         found = 1;
+        cout << "\nBook Record Found" << endl;
+        cout << "Book ID: " << id << endl;
+        cout << "Book Title" << name << endl;
+        cout << "Book Author" << author << endl;
+        cout << "Do you want to Erase Book " << id
+             << "?\nhis process "
+                "cannot be reversed(y/n): ";
+        cin >> ch;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (ch == 'y') {
+          cout << "Book " << id << " Deleted" << endl;
+          continue;
+        } else if (ch == 'n') {
+          cout << "Not Deleted" << endl;
+        } else {
+          cout << "Error." << endl;
+        }
       }
       book_name.push_back(name);
       book_quant.push_back(count);
@@ -271,48 +289,36 @@ void Book::remove_book() {
     }
     input_file.close();
   }
-  if (found == 1) {
-    // books.erase(books.begin() + pos);
-    cout << "Book code" << book_code[bookpos] << " labelled"
-         << book_name[bookpos] << "has been erased successfully. ";
 
-    book_quant.erase(book_quant.begin() + bookpos);
-    book_name.erase(book_name.begin() + bookpos);
-    book_code.erase(book_code.begin() + bookpos);
-    author_name.erase(author_name.begin() + bookpos);
-
-    ofstream book_update;
-    book_update.open("Book.txt");
-    if (book_update) {
-      int i;
-      for (i = 0; i < m; i++) {
-        book_update << book_code[i];
-        book_update << book_name[i];
-        book_update << author_name[i];
-        book_update << book_quant[i];
-        book_update << endl;
-      }
-      book_update.close();
+  ofstream book_update;
+  book_update.open("Book.txt");
+  if (book_update) {
+    int i;
+    for (i = 0; i < m; i++) {
+      book_update << book_code[i];
+      book_update << book_name[i];
+      book_update << author_name[i];
+      book_update << book_quant[i];
+      book_update << endl;
     }
-  }
-
-  else if (found == 0) {
-    cout << "Error.\n Please make sure you have the book exists" << endl;
+    book_update.close();
   }
 }
 
 void Book::display() {
   ifstream input_file;
   input_file.open("Book.txt");
+
+  cout << "====================================" << endl;
+  cout << "ID\t BOOK TITLE\tQUANTITY\tAUTHOR" << endl;
+  cout << "====================================" << endl;
   if (input_file) {
-    while (input_file >> id >> name >> author >> count) {
-      if (count != 0) {
-        cout << id << '\t' << name << '\t' << author << '\t' << count << '\n';
-      } else {
-        continue;
-      }
+    while (input_file >> id >> name >> count >> author) {
+      cout << id << '\t' << name << '\t' << count << '\t' << author << '\n';
     }
     input_file.close();
+  } else {
+    cout << "Error" << endl;
   }
 }
 
@@ -321,16 +327,25 @@ void Book::input() {
   ofile.open("Book.txt", ios::app);
   if (ofile) {
     set_BookID();
-    cout << "Book ID: " << id;
-    cout << "Enter Book title:";
-    cin >> name;
+    if (id != 0) {
+      cout << "Book ID: " << id;
+      ofile << id;
+      ofile << " ";
+      cout << "Enter Book title:";
+      cin >> name;
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    ofile << name;
-    cout << "Enter Quantity to be stored: ";
-    cin >> count;
-    ofile << count;
-    ofile << endl;
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      ofile << name;
+      cout << "Enter Quantity to be stored: ";
+      cin >> count;
+      ofile << count;
+      ofile << " ";
+      cout << "Enter Author Last Name: ";
+      cin >> author;
+      ofile << author;
+      ofile << " ";
+      ofile << endl;
+    }
   }
 }
 void Book::set_BookID() {
