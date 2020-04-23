@@ -4,6 +4,7 @@ void Undergraduate::stddisplay() {
   ifstream input_file;
   string book;
   input_file.open("Members.txt");
+  cout << "ID\tSTUDENT NAME\tAGE\tBook Borrowed" << endl;
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
       if (id <= 4999) {
@@ -17,53 +18,60 @@ void Undergraduate::stddisplay() {
 }
 
 void Undergraduate::edit_std() {
-  int getid, found = 0, n = 0, i, pos;
+  int getid, n = 0, i;
+  char ch;
   vector<string> books;
   vector<string> names;
   vector<int> ages;
   vector<int> all_ID;
   cout << "Enter ID of undergraduate student:";
   cin >> getid;
+  if (getid >= 5000) {
+    cout << "Incorrect Menu Section" << endl;
+  }
   ifstream input_file;
   string book;
   input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
       all_ID.push_back(id);
-      if (getid == id) {
-        pos = n;
-        found = 1;
+      if ((getid == id) && (getid <= 4999)) {
+        cout << "User " << id << "\nName: " << name
+             << "\nFound. Do you want to edit their record?(y/n): ";
+        cin >> ch;
+        if (ch == 'y') {
+          cout << "Do you want to edit your name?(y/n)";
+          cin >> ch;
+          if (ch == 'y') {
+            cout << "Enter new name: ";
+            cin >> name;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+          } else {
+            cout << endl;
+          }
+          cout << "Do you want to edit your age?(y/n)";
+
+          cin >> ch;
+          if (ch == 'y') {
+            cout << "\nEnter new age:";
+            cin >> age;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+          } else {
+            cout << endl;
+          }
+          cout << "Name:" << name << "\nAge: " << age
+               << "\nRecord Updated successfully" << endl;
+        } else if (ch == 'n') {
+          cout << "User Record not Edited" << endl;
+        } else {
+          cout << "Error. User not Found or incorrect user entry." << endl;
+        }
       }
       books.push_back(book);
       names.push_back(name);
       ages.push_back(age);
       n++;
     }
-  }
-
-  if (found == 1) {
-    cout << "Do you want to edit your name?(y/n)";
-    char ch;
-    cin >> ch;
-    if (ch == 'y') {
-      cout << "Enter new name: ";
-      cin >> names[pos];
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    } else {
-      cout << endl;
-    }
-    cout << "Do you want to edit your age?(y/n)";
-
-    cin >> ch;
-    if (ch == 'y') {
-      cout << "\nEnter new age:";
-      cin >> ages[pos];
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    } else {
-      cout << endl;
-    }
-  } else {
-    cout << "Member not found";
   }
 
   input_file.close();
@@ -83,49 +91,61 @@ void Undergraduate::edit_std() {
   up_file.close();
 }
 void Undergraduate::remove_member() {
-  int getid, found = 0, n = 0, i, pos;
+  int getid, n = 0, i;
+  bool found = false;
   vector<string> books;
   vector<string> names;
   vector<int> ages;
   vector<int> all_ID;
-  cout << "Enter ID of undergraduate studentto be deleted:";
+  cout << "Enter ID of undergraduate student to be deleted:";
   cin >> getid;
   ifstream input_file;
   string book;
+  if (getid >= 5000) {
+    cout << "Incorrect Section" << endl;
+  }
+
   input_file.open("Members.txt");
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
-      all_ID.push_back(id);
-      if (getid == id) {
-        pos = n;
-        found = 1;
-
+      char ch = 'n';
+      if ((getid == id) && (getid <= 4999)) {
+        cout << "User " << id << "\nName: " << name
+             << "\nFound.\nDo you want to Erase their record?\nThis process "
+                "cannot "
+                "be reversed(y/n): ";
+        cin >> ch;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      }
+      if (ch == 'y') {
+        cout << "Record Erased" << endl;
+        found = true;
+        continue;
+      } else {
+        all_ID.push_back(id);
         books.push_back(book);
         names.push_back(name);
         ages.push_back(age);
         n++;
       }
     }
-
-    if (found == 1) {
-      books.erase(books.begin() + pos);
-      names.erase(names.begin() + pos);
-      ages.erase(ages.begin() + pos);
-      all_ID.erase(all_ID.begin() + pos);
-
-    } else {
-      cout << "Member not found" << endl;
-    }
   }
 
   input_file.close();
+  if (!found) {
+    cout << "Record Not Found" << endl;
+  }
   ofstream up_file;
   up_file.open("Members.txt");
   for (i = 0; i < n; i++) {
     up_file << all_ID[i];
+    up_file << " ";
     up_file << names[i];
+    up_file << " ";
     up_file << ages[i];
+    up_file << " ";
     up_file << books[i];
+
     up_file << endl;
   }
   up_file.close();

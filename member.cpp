@@ -59,22 +59,24 @@ void Member::input() {
   if (ofile) {
     ofile << endl;
     set_ID();
-    cout << "Unique ID Code" << id << endl;
-    ofile << id;
-    cout << "Enter your name:";
-    cin >> name;
+    if (id != 0) {
+      cout << "Unique ID Code" << id << endl;
+      ofile << id;
+      cout << "Enter your name:";
+      cin >> name;
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    ofile << " ";
-    ofile << name;
-    cout << "Enter age";
-    cin >> age;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    ofile << " ";
-    ofile << age;
-    ofile << "  Nill";
-    ofile << endl;
-    ofile.close();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      ofile << " ";
+      ofile << name;
+      cout << "Enter age";
+      cin >> age;
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      ofile << " ";
+      ofile << age;
+      ofile << "  Nill";
+      ofile << endl;
+      ofile.close();
+    }
   } else {
     cout << "Error" << endl;
     ofile.close();

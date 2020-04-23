@@ -56,11 +56,11 @@ int main(void) {
         }
       } else if (memch == 3) {
         cout << "1. Edit Undergradute Member" << endl;
-        cout << "2.Display Graduate Members" << endl;
+        cout << "2. Edit Graduate Members" << endl;
 
         cout << "3. Exit section" << endl;
         int edch;
-        cout << "Display choice: ";
+        cout << "Edit Menu choice: ";
         cin >> edch;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (edch == 1) {
@@ -78,7 +78,7 @@ int main(void) {
 
         cout << "3. Exit section" << endl;
         int remch;
-        cout << "Display choice: ";
+        cout << "Remove Menu choice: ";
         cin >> remch;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (remch == 1) {
