@@ -11,5 +11,4 @@ class Graduate : public Member {
   void edit_grad();
   void remove_gradmember();
 };
-
 #endif  // GRADUATE_H_INCLUDED
