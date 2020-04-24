@@ -215,66 +215,49 @@ void Book::remove_book() {
   char ch;
   cout << "Do you want to display the list books? (y,n)";
   cin >> ch;
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
   if (ch == 'y') {
     display();
   }
   cout << "\nEnter code of book intending to delete from database: ";
-  int bookcode, bookpos, found;
+  int bookcode;
   cin >> bookcode;
-
+  bool filecheck;
+  ofstream temp1;
+  temp1.open("temp.txt");
   ifstream input_file;
   input_file.open("Book.txt");
-  vector<string> book_name;
-  vector<int> book_code;
-  vector<string> author_name;
-  vector<int> book_quant;
-  int m;
   if (input_file) {
-    found = 0;
-    while (input_file >> id >> name >> author >> count) {
-      if (id == bookcode) {
-        bookpos = m;
-        found = 1;
-        cout << "\nBook Record Found" << endl;
-        cout << "Book ID: " << id << endl;
-        cout << "Book Title" << name << endl;
-        cout << "Book Author" << author << endl;
-        cout << "Do you want to Erase Book " << id
-             << "?\nhis process "
-                "cannot be reversed(y/n): ";
-        cin >> ch;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-        if (ch == 'y') {
-          cout << "Book " << id << " Deleted" << endl;
-          continue;
-        } else if (ch == 'n') {
-          cout << "Not Deleted" << endl;
-        } else {
-          cout << "Error." << endl;
-        }
-      }
-      book_name.push_back(name);
-      book_quant.push_back(count);
-      book_code.push_back(id);
-      author_name.push_back(author);
-      m++;
+    if (temp1) {
+      filecheck = true;
     }
-    input_file.close();
   }
 
-  ofstream book_update;
-  book_update.open("Book.txt");
-  if (book_update) {
-    int i;
-    for (i = 0; i < m; i++) {
-      book_update << book_code[i];
-      book_update << book_name[i];
-      book_update << author_name[i];
-      book_update << book_quant[i];
-      book_update << endl;
+  if (filecheck) {
+    while (input_file >> id >> name >> author >> count) {
+      if (id == bookcode) {
+        cout << "\nFound." << endl;
+        cout << "Book ID: " << id << endl;
+        cout << "Title: " << name << endl;
+        cout << "Do you want to Erase this Book from the library? (This "
+                "process cannot be reversed)(y/n)";
+        cin >> ch;
+        if (ch == 'y') {
+          cout << name << " Erased from Library" << endl;
+          continue;
+        }
+      }
+      temp1 << id;
+      temp1 << " ";
+      temp1 << name;
+      temp1 << " ";
+      temp1 << count;
+      temp1 << " ";
+      temp1 << author;
+      temp1 << endl;
     }
-    book_update.close();
+    input_file.close();
   }
 }
 
