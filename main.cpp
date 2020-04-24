@@ -203,5 +203,7 @@ void edit_book(Book book) {
     }
     remove("Book.txt");
     rename("temp.txt", "Book.txt");
+  } else {
+    cout << "Error. Try again later." << endl;
   }
 }
