@@ -235,7 +235,7 @@ void Book::remove_book() {
   }
 
   if (filecheck) {
-    while (input_file >> id >> name >> author >> count) {
+    while (input_file >> id >> name >> count >> author) {
       if (id == bookcode) {
         cout << "\nFound." << endl;
         cout << "Book ID: " << id << endl;
@@ -258,6 +258,9 @@ void Book::remove_book() {
       temp1 << endl;
     }
     input_file.close();
+    temp1.close();
+    remove("Book.txt");
+    rename("temp.txt", "Book.txt");
   }
 }
 

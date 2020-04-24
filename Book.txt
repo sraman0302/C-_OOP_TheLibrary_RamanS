@@ -1,2 +1,1 @@
-2615 C++ 2 MURACH
-2596 C++ 9 Murach
+7653 Python 8 Nee
