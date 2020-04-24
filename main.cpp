@@ -136,75 +136,66 @@ int main(void) {
 }
 
 void edit_book(Book book) {
-  int getid, found = 0, n = 0, i, pos;
-  vector<string> bookname;
-  vector<string> bookauthor;
-  vector<int> bookcount;
-  vector<int> bookID;
-  cout << "Enter ID of Book to be edited:";
-  cin >> getid;
-  ifstream input_file;
-
-  input_file.open("Book.txt");
-  if (input_file) {
-    while (input_file >> book.id >> book.name >> book.author >> book.count) {
-      bookID.push_back(book.id);
-      if (getid == book.id) {
-        pos = n;
-        found = 1;
-
-        bookname.push_back(book.name);
-        bookauthor.push_back(book.author);
-        bookcount.push_back(book.count);
-        n++;
-      }
-    }
-
-    if (found == 1) {
-      cout << "Do you want to edit the book title ?(y/n)";
-      char ch;
-      cin >> ch;
-      if (ch == 'y') {
-        cout << "Enter new title: ";
-        cin >> bookname[pos];
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      } else {
-        cout << endl;
-      }
-      cout << "Do you want to edit your age?(y/n)";
-
-      cin >> ch;
-      if (ch == 'y') {
-        cout << "\nEdit author name:";
-        cin >> bookauthor[pos];
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      } else {
-        cout << endl;
-      }
-      cout << "Do you want to update the stock?(y/n)";
-
-      cin >> ch;
-      if (ch == 'y') {
-        cout << "\nEnter new count value:";
-        cin >> bookcount[pos];
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      } else {
-        cout << endl;
-      }
-    } else {
-      cout << "Member not found";
+  char ch;
+  int getid;
+  bool filecheck;
+  ofstream temp_file;
+  temp_file.open("temp.txt");
+  ifstream book_file;
+  book_file.open("Book.txt");
+  if (book_file) {
+    if (temp_file) {
+      filecheck = true;
     }
   }
+  if (filecheck) {
+    cout << "Enter Book ID to be edited: ";
+    cin >> getid;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-  input_file.close();
-  ofstream up_file;
-  up_file.open("Book.txt");
-  for (i = 0; i < n; i++) {
-    up_file << bookID[i];
-    up_file << bookname[i];
-    up_file << bookauthor[i];
-    up_file << bookcount[i];
-    up_file << endl;
+    while (book_file >> book.id >> book.name >> book.count >> book.author) {
+      if (book.id == getid) {
+        cout << "Book Title: " << book.name;
+
+        cout << endl;
+        int ch;
+        cout << "1.Edit Book Title" << endl;
+        cout << "2.Edit Count" << endl;
+        cout << "3.Edit Author Last Name " << endl;
+
+        cout << "\nYour Choice: ";
+        cin >> ch;
+        switch (ch) {
+          case 1:
+            cout << "\nEnter New Book Title: ";
+            cin >> book.name;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            break;
+          case 2:
+            cout << "\nEnter New Book Quantity: ";
+            cin >> book.count;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            break;
+          case 3:
+            cout << "\nEnter New Author Name: ";
+            cin >> book.author;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            break;
+          default:
+            cout << "\nIncorrect Choice" << endl;
+            break;
+        }
+      }
+      temp << book.id;
+      temp << " ";
+      temp << book.name;
+      temp << " ";
+      temp << book.count;
+      temp << " ";
+      temp << book.author;
+      temp << endl;
+    }
+    remove("Book.txt");
+    rename("temp.txt", "Book.txt");
   }
-  up_file.close();
 }
