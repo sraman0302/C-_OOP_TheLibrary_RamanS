@@ -139,12 +139,12 @@ void edit_book(Book book) {
   char ch;
   int getid;
   bool filecheck;
-  ofstream temp_file;
-  temp_file.open("temp.txt");
+  ofstream temp;
+  temp.open("temp.txt");
   ifstream book_file;
   book_file.open("Book.txt");
   if (book_file) {
-    if (temp_file) {
+    if (temp) {
       filecheck = true;
     }
   }
@@ -158,31 +158,35 @@ void edit_book(Book book) {
         cout << "Book Title: " << book.name;
 
         cout << endl;
-        int ch;
+        int ch1;
         cout << "1.Edit Book Title" << endl;
         cout << "2.Edit Count" << endl;
         cout << "3.Edit Author Last Name " << endl;
 
         cout << "\nYour Choice: ";
-        cin >> ch;
-        switch (ch) {
+        cin >> ch1;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        switch (ch1) {
           case 1:
             cout << "\nEnter New Book Title: ";
             cin >> book.name;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Section Edited Book ID: " << book.id << endl;
             break;
           case 2:
             cout << "\nEnter New Book Quantity: ";
             cin >> book.count;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Section Edited Book ID: " << book.id << endl;
             break;
           case 3:
             cout << "\nEnter New Author Name: ";
             cin >> book.author;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Section Edited Book ID: " << book.id << endl;
             break;
           default:
-            cout << "\nIncorrect Choice" << endl;
+            cout << "\nIncorrect Choice. Edit Section Failed." << endl;
             break;
         }
       }
@@ -194,6 +198,8 @@ void edit_book(Book book) {
       temp << " ";
       temp << book.author;
       temp << endl;
+      temp.close();
+      book_file.close();
     }
     remove("Book.txt");
     rename("temp.txt", "Book.txt");
