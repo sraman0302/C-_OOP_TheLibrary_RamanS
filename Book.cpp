@@ -12,115 +12,107 @@ vector<int> Book::operator+(const Book& book) {
   return bookID;
 }
 void Book::borrow_book() {
-  int found = 0, pos, n = 0, member_id, borrow = 0;
-  cout << "Enter 4-digit code of user: ";
-  cin >> member_id;
-  vector<int> members_id;
-  vector<string> members_name;
-  vector<string> members_book;
-  vector<int> ages;
-  ifstream member_file;
-  string memname, membook;
-  int memid, memage;
-  member_file.open("Members.txt");
-  if (member_file) {
-    while (member_file >> memid >> name >> memage >> membook) {
-      if (memid == member_id) {
-        pos = n;
-        found = 1;
-      }
+  cout << "\nDo you want to display the books available at the Library?(y/n)";
+  char ch;
+  cin >> ch;
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-      ages.push_back(memage);
-      members_id.push_back(memid);
-      members_name.push_back(name);
-      members_book.push_back(membook);
-      n++;
-    }
+  if (ch == 'y') {
+    cout << "\nDisplaying the available books for reference" << endl;
+    display();
   }
-  if (members_book[pos] == " ") {
-    borrow = 1;
-  }
-  member_file.close();
-  if (borrow == 1) {
-    cout << "Do you want to display the books available at the Library?";
-    char ch;
-    cin >> ch;
-    if (ch == 'y') {
-      cout << "\nDisplaying the available books for reference" << endl;
-      display();
-    }
-    cout << "\nEnter code of book intending to borrow for 3 hours (Limit 1 per "
-            "user)";
-    int bookcode, bookpos;
-    cin >> bookcode;
+  int bookcode, memcode, mid, mage;
+  bool found;
+  string mname, mbook, bookcheck = "Nill";
+  cout << "\nEnter code of book intending to borrow for 3 hours (Limit 1 per "
+          "user) ";
 
-    ifstream input_file;
-    input_file.open("Book.txt");
-    vector<string> book_name;
-    vector<int> book_code;
-    vector<string> author_name;
-    vector<int> book_quant;
-    int m;
-    if (input_file) {
-      found = 0;
-      while (input_file >> id >> name >> author >> count) {
-        if ((id == bookcode) && (count > 0)) {
-          bookpos = m;
-          found = 1;
-        }
-        book_name.push_back(name);
-        book_quant.push_back(count);
-        book_code.push_back(id);
-        author_name.push_back(author);
-        m++;
-      }
-      input_file.close();
-    }
-    if (found == 1) {
-      cout << "Book code" << book_code[bookpos] << " labelled"
-           << book_name[bookpos] << "issued to "
-           << "User ID: " << members_id[pos] << " Named:" << members_name[pos]
-           << endl;
-      members_book[pos] == book_name[bookpos];
-      cout << "Book due to be returned in 3 hours" << endl;
-      book_quant[bookpos]--;
+  cin >> bookcode;
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  ofstream temp1;
+  temp1.open("temp1.txt");
 
-      ofstream member_update;
-      member_update.open("Members.txt");
-      if (member_update) {
-        int i;
-        for (i = 0; i < n; i++) {
-          member_update << members_id[i];
-          member_update << members_name[i];
-          member_update << ages[i];
-          member_update << members_book[i];
-          member_update << endl;
+  ifstream book_file;
+  book_file.open("Book.txt");
+
+  if (book_file.is_open()) {
+    while (book_file >> id >> name >> count >> author) {
+      if (id == bookcode) {
+        if ((id < 5000 && bookcode < 5000) ||
+            (id >= 5000 && bookcode >= 5000)) {
+          if (count > 0) {
+            cout << "\nBook ID: " << id << "\nTitle: " << name
+                 << " is available on a loan for 3 hours";
+            cout << "\nDo you want to borrow " << name << " ?";
+            cin >> ch;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+          } else {
+            cout << "\nBook out of stock" << endl;
+            break;
+          }
+          if (ch == 'y') {
+            ofstream temp2;
+            temp2.open("temp2.txt");
+            ifstream member_file;
+            member_file.open("Members.txt");
+            count--;
+            cout << "Enter Member ID: ";
+            cin >> memcode;
+            while (member_file >> mid >> mname >> mage >> mbook) {
+              if (memcode == mid) {
+                if (mbook.compare(bookcheck) == 0) {
+                  cout << "Member Found!" << endl;
+                  cout << "\nMember " << mid << "\nName: " << mname << endl;
+                  cout << "\nBook : " << name << " has been issued to " << mname
+                       << endl;
+                  mbook = name;
+                } else {
+                  cout << mname << " has already borrowed " << mbook;
+                  cout << "Do you want to return " << mbook
+                       << " and return back to this section?(y/n) ";
+                  cin >> ch;
+                  if (ch == 'y') {
+                    return_book();
+                  }
+                }
+              }
+            }
+            temp2 << mid;
+            temp2 << " ";
+            temp2 << mname;
+            temp2 << " ";
+            temp2 << mage;
+            temp2 << " ";
+
+            temp2 << mbook;
+            temp2 << endl;
+          }
+          member_file.close();
+          temp2.close();
+        } else {
+          cout << "\nBook cannot be issued due to degree status" << endl;
         }
-        member_update.close();
       }
-      ofstream book_update;
-      book_update.open("Book.txt");
-      if (book_update) {
-        int i;
-        for (i = 0; i < m; i++) {
-          book_update << book_code[i];
-          book_update << book_name[i];
-          book_update << author_name[i];
-          book_update << book_quant[i];
-          book_update << endl;
-        }
-        book_update.close();
-      }
-    } else {
-      cout << "Invalid entry" << endl;
+      temp1 << id;
+      temp1 << " ";
+      temp1 << name;
+      temp1 << " ";
+      temp1 << count;
+      temp1 << " ";
+      temp1 << author;
+      temp1 << endl;
     }
-  } else if (borrow == 0) {
-    cout
-        << "Error.\n Please make sure you have no books due and intending to a "
-           "book available at the library."
-        << endl;
+  } else {
+    cout << "Error" << endl;
   }
+  book_file.close();
+  temp1.close();
+  remove("Members.txt");
+  remove("Book.txt");
+  rename("temp1.txt", "Book.txt");
+  rename("temp2.txt", "Members.txt");
 }
+
 void Book::return_book() {
   int found = 0, pos, n = 0, member_id, give = 0;
   cout << "Enter 4-digit code of user initiate return process: ";
@@ -336,6 +328,7 @@ void Book::input() {
 
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
       ofile << name;
+      ofile << " ";
       cout << "Enter Quantity to be stored: ";
       cin >> count;
       ofile << count;
