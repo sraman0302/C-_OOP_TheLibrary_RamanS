@@ -99,7 +99,7 @@ int main(void) {
         Member m1;
         ID = m + m1;
         for (i = 0; i < ID.size(); i++) {
-          cout << ID[i];
+          cout << ID[i] << endl;
         }
 
       } else if (memch == 6) {
@@ -140,7 +140,7 @@ int main(void) {
     } else if (ch == 3) {
       int count_newmembers = m.member_count();
       cout << "Thanks for using the Library" << endl;
-      cout << "New members Added Today: " << count_newmembers << endl;
+      cout << "New members Welcomed Today: " << count_newmembers << endl;
 
       cout << "Exit Library " << endl;
       break;

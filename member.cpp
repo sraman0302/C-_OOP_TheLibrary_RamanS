@@ -1,6 +1,7 @@
 #include "Member.h"
 // rand() % (b - a + 1) + a
 int Member::count = 0;
+int Member::member_count() { return count; }
 
 string Member::get_name() { return name; }
 void Member::set_ID() {
@@ -45,9 +46,13 @@ void Member::display() {
   cout << "ID\tSTUDENT NAME\t AGE\tBook Borrowed" << endl;
   cout << "===============================================" << endl;
   if (input_file) {
-    while (input_file >> id >> name >> age >> book) {
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, book, '\t');
+      input_file >> id >> age;
       cout << left << setw(8) << id << left << setw(18) << name << left
-           << setw(7) << age << left << setw(10) << book << endl;
+           << setw(7) << age << left << setw(10) << book;
+      cout << endl;
     }
     input_file.close();
   } else {
@@ -64,21 +69,21 @@ void Member::input() {
       cout << "Unique ID Code: " << id << endl;
 
       cout << "Enter your name:";
-      cin >> name;
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      getline(cin, name);
+      // cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
       cout << "Enter age: ";
       cin >> age;
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
+      ofile << name;
+      ofile << "\t";
+      ofile << "Nill\t";
       ofile << id;
       ofile << " ";
-      ofile << name;
-      ofile << " ";
       ofile << age;
-      ofile << "  Nill";
+      // ofile << "\n";
 
-      ofile << endl;
       ofile.close();
     } else {
       cout << "\nMember cannot be input" << endl;
@@ -90,13 +95,15 @@ void Member::input() {
 }
 vector<int> Member::operator+(const Member& member) {
   ifstream input_file;
-  int ID;
+  string book;
   input_file.open("Members.txt");
   if (input_file) {
-    while (input_file >> ID) {
-      membersID.push_back(ID);
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, book, '\t');
+      input_file >> id >> age;
+      membersID.push_back(id);
     }
   }
   return membersID;
 }
-int Member::member_count() { return count; }

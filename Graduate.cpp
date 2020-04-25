@@ -6,9 +6,15 @@ void Graduate::grad_display() {
   input_file.open("Members.txt");
   cout << "ID\tSTUDENT NAME\tAGE\tBook Borrowed" << endl;
   if (input_file) {
-    while (input_file >> id >> name >> age >> book) {
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, book, '\t');
+      input_file >> id >> age;
       if (id > 4999) {
-        cout << id << '\t' << name << '\t' << age << '\t' << book << '\n';
+        cout << left << setw(8) << id << left << setw(18) << name << left
+             << setw(7) << age << left << setw(10) << book;
+        cout << endl;
+
       } else {
         continue;
       }
@@ -41,7 +47,10 @@ void Graduate::edit_grad() {
   }
 
   if (filecheck) {
-    while (input_file >> id >> name >> age >> book) {
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, book, '\t');
+      input_file >> id >> age;
       if ((getid == id) && (getid >= 5000)) {
         found = true;
         cout << "User " << id << "\nName: " << name
@@ -78,16 +87,15 @@ void Graduate::edit_grad() {
           cout << "Error. User not Found or incorrect user entry." << endl;
         }
       }
-      temp_file << id;
-      temp_file << " ";
       temp_file << name;
+      temp_file << "\t";
+      temp_file << book;
+      temp_file << "\t";
+
+      temp_file << id;
       temp_file << " ";
 
       temp_file << age;
-      temp_file << " ";
-
-      temp_file << book;
-      temp_file << endl;
     }
     input_file.close();
     temp_file.close();
@@ -115,7 +123,10 @@ void Graduate::remove_gradmember() {
 
   input_file.open("Members.txt");
   if (input_file) {
-    while (input_file >> id >> name >> age >> book) {
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, book, '\t');
+      input_file >> id >> age;
       char ch = 'n';
       if ((getid == id) && (getid >= 5000)) {
         cout << "User " << id << "\nName: " << name
@@ -130,16 +141,15 @@ void Graduate::remove_gradmember() {
         found = true;
         continue;
       } else {
-        temp_file << id;
-        temp_file << " ";
         temp_file << name;
+        temp_file << "\t";
+        temp_file << book;
+        temp_file << "\t";
+
+        temp_file << id;
         temp_file << " ";
 
         temp_file << age;
-        temp_file << " ";
-
-        temp_file << book;
-        temp_file << endl;
       }
     }
   }
