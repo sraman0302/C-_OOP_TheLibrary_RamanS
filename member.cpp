@@ -20,6 +20,8 @@ void Member::set_ID() {
 
       } else {
         cout << "Invalid Choice.";
+        id = 0;
+        break;
       }
       int i, found = 0, n = membersID.size();
 
@@ -39,43 +41,47 @@ void Member::display() {
   ifstream input_file;
   input_file.open("Members.txt");
   string book;
-  cout << "====================================" << endl;
-  cout << "ID\tSTUDENT NAME\tAGE\tBook Borrowed" << endl;
-  cout << "====================================" << endl;
+  cout << "===============================================" << endl;
+  cout << "ID\tSTUDENT NAME\t AGE\tBook Borrowed" << endl;
+  cout << "===============================================" << endl;
   if (input_file) {
     while (input_file >> id >> name >> age >> book) {
-      cout << id << '\t' << name << '\t' << age << '\t' << book << endl;
+      cout << left << setw(8) << id << left << setw(18) << name << left
+           << setw(7) << age << left << setw(10) << book << endl;
     }
     input_file.close();
   } else {
     cout << "Error" << endl;
   }
 }
-
 void Member::input() {
   ++count;
   ofstream ofile;
   ofile.open("Members.txt", ios::app);
   if (ofile) {
-    ofile << endl;
     set_ID();
     if (id != 0) {
       cout << "Unique ID Code: " << id << endl;
-      ofile << id;
+
       cout << "Enter your name:";
       cin >> name;
-
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      ofile << " ";
-      ofile << name;
+
       cout << "Enter age: ";
       cin >> age;
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+      ofile << id;
+      ofile << " ";
+      ofile << name;
       ofile << " ";
       ofile << age;
       ofile << "  Nill";
+
       ofile << endl;
       ofile.close();
+    } else {
+      cout << "\nMember cannot be input" << endl;
     }
   } else {
     cout << "Error" << endl;

@@ -22,7 +22,7 @@ void Book::borrow_book() {
     display();
   }
   int bookcode, memcode, mid, mage;
-  bool found, filecheck;
+  bool found = false, filecheck;
   string mname, mbook, bookcheck = "Nill";
   cout << "\nEnter code of book intending to borrow for 3 hours (Limit 1 per "
           "user) ";
@@ -54,6 +54,7 @@ void Book::borrow_book() {
   if (filecheck) {
     while (book_file >> id >> name >> count >> author) {
       if (id == bookcode) {
+        found = true;
         if (count > 0) {
           cout << "\nBook ID: " << id << "\nTitle: " << name
                << " is available on a loan for 3 hours";
@@ -119,6 +120,9 @@ void Book::borrow_book() {
   } else {
     cout << "Error. Try again Later." << endl;
   }
+  if (!found) {
+    cout << "\nUser Not Found" << endl;
+  }
   book_file.close();
   temp1.close();
   remove("Members.txt");
@@ -142,11 +146,11 @@ void Book::return_book() {
 
   string memname, membook, bookcheck = "Nill";
 
-  bool filecheck;
+  bool filecheck, found = false;
   int memid, memage;
   char ch;
 
-  int found = 0, pos, n = 0, member_id;
+  int member_id;
   cout << "Enter 4-digit code of user initiate return process: ";
   cin >> member_id;
   cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -164,6 +168,7 @@ void Book::return_book() {
   if (filecheck) {
     while (member_file >> memid >> memname >> memage >> membook) {
       if (memid == member_id) {
+        found = true;
         if (membook.compare(bookcheck) != 0) {
           cout << "\nMember: " << name << " borrowed " << membook << endl;
           cout << "Return " << membook << " ?(y/n) ";
@@ -208,6 +213,9 @@ void Book::return_book() {
     rename("temp2.txt", "Members.txt");
   } else {
     cout << "Error. Try again later" << endl;
+  }
+  if (!found) {
+    cout << "\nUser Not Found" << endl;
   }
 }
 

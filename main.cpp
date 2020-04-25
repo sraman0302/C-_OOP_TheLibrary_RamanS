@@ -15,7 +15,7 @@ int main(void) {
     cout << "1. Library Members" << endl;
     cout << "2. Library Books" << endl;
     cout << "3. Exit the menu" << endl;
-    cout << "Enter your choice: ";
+    cout << "\nEnter your choice: ";
     int ch;
     cin >> ch;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -26,7 +26,8 @@ int main(void) {
               "members";
       cout << "\n3: Edit the details of an existing member";
       cout << "\n4: Remove a member";
-      cout << "\n5. Exit section" << endl;
+      cout << "\n5. Information Access";
+      cout << "\n6. Exit section" << endl;
       int memch;
       cout << "\nEnter your choice: ";
       cin >> memch;
@@ -91,6 +92,17 @@ int main(void) {
           cout << "Incorrect Choice" << endl;
         }
       } else if (memch == 5) {
+        cout << "\n1.View Member ID's" << endl;
+        cout << "2.View Amount of Members created in this run" << endl;
+        int acc_ch, i;
+        vector<int> ID;
+        Member m1;
+        ID = m + m1;
+        for (i = 0; i < ID.size(); i++) {
+          cout << ID[i];
+        }
+
+      } else if (memch == 6) {
         cout << "\nMember Section Exit" << endl;
       } else {
         cout << "\nInvalid Choice" << endl;
@@ -126,6 +138,10 @@ int main(void) {
         cout << "Invalid Choice" << endl;
       }
     } else if (ch == 3) {
+      int count_newmembers = m.member_count();
+      cout << "Thanks for using the Library" << endl;
+      cout << "New members Added Today: " << count_newmembers << endl;
+
       cout << "Exit Library " << endl;
       break;
     } else {
@@ -136,8 +152,7 @@ int main(void) {
 }
 
 void edit_book(Book book) {
-  char ch;
-  int getid;
+  int getid, ch1;
   bool filecheck;
   ofstream temp;
   temp.open("temp.txt");
@@ -158,7 +173,7 @@ void edit_book(Book book) {
         cout << "Book Title: " << book.name;
 
         cout << endl;
-        int ch1;
+
         cout << "1.Edit Book Title" << endl;
         cout << "2.Edit Count" << endl;
         cout << "3.Edit Author Last Name " << endl;
