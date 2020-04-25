@@ -72,7 +72,7 @@ void Member::input() {
       getline(cin, name);
       // cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-      cout << "Enter age: ";
+      cout << "\nEnter age: ";
       cin >> age;
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
 

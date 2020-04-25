@@ -51,6 +51,7 @@ void Undergraduate::edit_std() {
       getline(input_file, book, '\t');
       input_file >> id >> age;
       if ((getid == id) && (getid <= 4999)) {
+        found = true;
         cout << "User " << id << "\nName: " << name
              << "\nFound. Do you want to edit their record?(y/n): ";
         cin >> ch;
@@ -64,14 +65,19 @@ void Undergraduate::edit_std() {
           cin >> edch;
           switch (edch) {
             case 1:
-              cout << "\nEnter New Name";
-              cin >> name;
               cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+              cout << "\nEnter New Name";
+              getline(cin, name, '\n');
+
+              cout << "\nName Updated" << endl;
+
               break;
             case 2:
               cout << "\nEnter New Age";
               cin >> age;
               cin.ignore(numeric_limits<streamsize>::max(), '\n');
+              cout << "Age Update Successfully" << endl;
               break;
             case 3:
               break;

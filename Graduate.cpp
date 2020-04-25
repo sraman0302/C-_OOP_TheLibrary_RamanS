@@ -67,8 +67,7 @@ void Graduate::edit_grad() {
           switch (edch) {
             case 1:
               cout << "\nEnter New Name";
-              cin >> name;
-              cin.ignore(numeric_limits<streamsize>::max(), '\n');
+              getline(cin, name);
               break;
             case 2:
               cout << "\nEnter New Age";
