@@ -3,12 +3,15 @@
 #include "Member.h"
 #include "Undergraduate.h"
 int main(void) {
+  // Main Menu
   while (true) {
+    // Declare Object
     Book b;
     Member m;
     Undergraduate ug;
     Graduate grad;
     cout << endl << endl;
+    // Display
     cout << "==============================" << endl;
     cout << "\t  Main Menu" << endl;
     cout << "==============================" << endl;
@@ -20,7 +23,13 @@ int main(void) {
     cin >> ch;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
+    // Member Menu
+
     if (ch == 1) {
+      int memch;
+
+      // Display Member Menu Options
+
       cout << "\n1: Enter a new member";
       cout << "\n2: Display current "
               "members";
@@ -28,22 +37,27 @@ int main(void) {
       cout << "\n4: Remove a member";
       cout << "\n5. Information Access";
       cout << "\n6. Exit section" << endl;
-      int memch;
       cout << "\nEnter your choice: ";
+
       cin >> memch;
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+      // Input function call in Member Class
+
       if (memch == 1) {
         m.input();
 
-      } else if (memch == 2) {
+      } else if (memch == 2) {  // Display Function Menu
+        int disch;
         cout << "1. Display all Members" << endl;
         cout << "2.Display Undergraduate Members" << endl;
         cout << "3. Display Graduate Members" << endl;
         cout << "4. Exit section" << endl;
-        int disch;
+
         cout << "Display choice: ";
         cin >> disch;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
         if (disch == 1) {
           m.display();
         } else if (disch == 2) {
@@ -55,15 +69,16 @@ int main(void) {
         } else {
           cout << "Incorrect Choice" << endl;
         }
-      } else if (memch == 3) {
+      } else if (memch == 3) {  // Member Choice #3 - Edit Members
+        int edch;
+
         cout << "1. Edit Undergradute Member" << endl;
         cout << "2. Edit Graduate Members" << endl;
-
         cout << "3. Exit section" << endl;
-        int edch;
         cout << "Edit Menu choice: ";
         cin >> edch;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
         if (edch == 1) {
           ug.edit_std();
         } else if (edch == 2) {
@@ -73,15 +88,16 @@ int main(void) {
         } else {
           cout << "Incorrect Choice" << endl;
         }
-      } else if (memch == 4) {
+      } else if (memch == 4) {  // Remove Member Menu
+        int remch;
+
         cout << "1. Remove Undergradute Member" << endl;
         cout << "2. Remove Graduate Member" << endl;
-
         cout << "3. Exit section" << endl;
-        int remch;
         cout << "Remove Menu choice: ";
         cin >> remch;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
         if (remch == 1) {
           ug.remove_member();
         } else if (remch == 2) {
@@ -91,15 +107,45 @@ int main(void) {
         } else {
           cout << "Incorrect Choice" << endl;
         }
-      } else if (memch == 5) {
+      } else if (memch ==
+                 5) {  // Static Function and Overloading Operator Usage Menu
         cout << "\n1.View Member ID's" << endl;
         cout << "2.View Amount of Members created in this run" << endl;
         int acc_ch, i;
-        vector<int> ID;
-        Member m1;
-        ID = m + m1;
-        for (i = 0; i < ID.size(); i++) {
-          cout << ID[i] << endl;
+        char ch1;
+        cout << "Enter your choice: ";
+        cin >> acc_ch;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        if (acc_ch == 1) {
+          cout << "The following contains senstive information. Do you still "
+                  "want to view the ID's?(y/n) ";
+          cin >> ch1;
+          cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+          if (ch1 == 'y') {
+            vector<int> ID;
+            Member m1, m2;  // Operator Overloading
+            ID = m1 + m2;
+            int size = ID.size();
+
+            cout << "\nMember's ID:" << endl;
+            cout << "-------------" << endl;
+            for (i = 0; i < size; i++) {
+              cout << i + 1 << ". " << ID[i] << endl;
+            }
+
+          } else {
+            cout << "\nAccess Menu Exit";
+          }
+        } else if (acc_ch == 2) {
+          int count_newmembers;
+          count_newmembers = m.member_count();  // Static Member Usage
+          cout << "Number of New Members Welcomed Today: " << count_newmembers
+               << endl;
+        }
+
+        else {
+          cout << "\nInvalid choice" << endl;
         }
 
       } else if (memch == 6) {
@@ -107,24 +153,28 @@ int main(void) {
       } else {
         cout << "\nInvalid Choice" << endl;
       }
-    } else if (ch == 2) {
+    } else if (ch == 2) {  // Book Menu
+      int bookch;
+
       cout << "\n1. Display books with details" << endl;
       cout << "2: Borrow a book" << endl;
       cout << "3: Return a book" << endl;
       cout << "4. Add a book" << endl;
-      cout << "5.Remove a book" << endl;
-      cout << "6.Edit the details of a book" << endl;
-      cout << "7. Exit section" << endl;
-      int bookch;
+      cout << "5. Remove a book" << endl;
+      cout << "6. Edit the details of a book" << endl;
+      cout << "7. Access Information" << endl;
+      cout << "8. Exit section" << endl;
       cout << "Enter your choice: ";
       cin >> bookch;
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
       if (bookch == 1) {
         b.display();
-
       } else if (bookch == 2) {
         b.borrow_book();
       } else if (bookch == 3) {
         b.return_book();
+        remove("temp.txt");
       } else if (bookch == 4) {
         b.input();
       } else if (bookch == 5) {
@@ -132,15 +182,41 @@ int main(void) {
 
       } else if (bookch == 6) {
         edit_book(b);
-      } else if (bookch == 7) {
+
+      } else if (bookch == 7) {  // Operator Overloading
+        int info_ch;
+        cout << " Information Access." << endl;
+        cout << "\n1. View Book ID's" << endl;
+        cout << "2. Exit Section" << endl;
+        cout << "Enter Choice: ";
+        cin >> info_ch;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (info_ch == 1) {
+          Book b1, b2;
+          vector<int> book;
+          book = b1 + b2;  // Operator Overloading
+          int i, size;
+          size = book.size();
+          cout << "\n   ID" << endl;
+          cout << "----------" << endl;
+          for (i = 0; i < size; i++) {
+            cout << i + 1 << ". " << book[i] << endl;
+          }
+        } else if (info_ch == 2) {
+          cout << "\nExit Section" << endl;
+        } else {
+          cout << "Invalid Choice" << endl;
+        }
+      }
+
+      else if (bookch == 8) {
         cout << "Exit section" << endl;
       } else {
         cout << "Invalid Choice" << endl;
       }
     } else if (ch == 3) {
-      int count_newmembers = m.member_count();
       cout << "Thanks for using the Library" << endl;
-      cout << "New members Welcomed Today: " << count_newmembers << endl;
 
       cout << "Exit Library.\nBYE! " << endl;
       break;
@@ -151,6 +227,7 @@ int main(void) {
   return 0;
 }
 
+// Friend Function
 void edit_book(Book book) {
   int getid, ch1;
   bool filecheck;

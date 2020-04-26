@@ -2,7 +2,6 @@
 
 vector<int> Book::operator+(const Book& book) {
   ifstream input_file;
-  int ID;
   input_file.open("Book.txt");
   if (input_file) {
     while (!input_file.eof()) {
@@ -76,6 +75,7 @@ void Book::borrow_book() {
           count--;
           cout << "Enter Member ID: ";
           cin >> memcode;
+          cin.ignore(numeric_limits<streamsize>::max(), '\n');
           while (!member_file.eof()) {
             getline(member_file, mname, '\t');
             getline(member_file, mbook, '\t');
@@ -90,28 +90,25 @@ void Book::borrow_book() {
                        << endl;
                   mbook = name;
                 } else {
-                  cout << mname << " has already borrowed " << mbook;
-                  cout << "Do you want to return " << mbook
-                       << " and return back to this section?(y/n) ";
-                  cin >> ch;
-                  if (ch == 'y') {
-                    return_book();
-                  }
+                  cout << mname << " has already borrowed " << mbook << endl;
+                  count++;
+                  cout << "Please return " << mbook << " to rent " << name
+                       << " for 3 hours." << endl;
                 }
               } else {
                 cout << "\nBook reserved for alternate degree seeking student."
                      << endl;
+                count++;
               }
             }
+            temp2 << mname;
+            temp2 << "\t";
+            temp2 << mbook;
+            temp2 << "\t";
+            temp2 << mid;
+            temp2 << " ";
+            temp2 << mage;
           }
-
-          temp2 << mname;
-          temp2 << "\t";
-          temp2 << mbook;
-          temp2 << "\t";
-          temp2 << mid;
-          temp2 << " ";
-          temp2 << mage;
         }
         member_file.close();
         temp2.close();
@@ -180,7 +177,7 @@ void Book::return_book() {
       if (memid == member_id) {
         found = true;
         if (membook.compare(bookcheck) != 0) {
-          cout << "\nMember: " << name << " borrowed " << membook << endl;
+          cout << "\nMember: " << memname << " borrowed " << membook << endl;
           cout << "Return " << membook << " ?(y/n) ";
           cin >> ch;
           if (ch == 'y') {
@@ -208,7 +205,7 @@ void Book::return_book() {
             rename("temp.txt", "Book.txt");
           }
         } else {
-          cout << "\nMember not issued any book" << endl;
+          cout << "\n" << memname << " not issued any book" << endl;
         }
       }
       temp2 << memname;
@@ -226,6 +223,7 @@ void Book::return_book() {
   } else {
     cout << "Error. Try again later" << endl;
   }
+
   if (!found) {
     cout << "\nUser Not Found" << endl;
   }

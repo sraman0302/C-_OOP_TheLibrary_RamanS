@@ -1,5 +1,5 @@
 #include "Member.h"
-// rand() % (b - a + 1) + a
+
 int Member::count = 0;
 int Member::member_count() { return count; }
 
@@ -55,7 +55,7 @@ void Member::display() {
       input_file >> id >> age;
       cout << left << setw(8) << id << left << setw(18) << name << left
            << setw(7) << age << left << setw(10) << book;
-      cout << endl;
+      cout << "\n---------------------------------------------" << endl;
     }
     input_file.close();
   } else {

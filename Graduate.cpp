@@ -13,8 +13,7 @@ void Graduate::grad_display() {
       if (id > 4999) {
         cout << left << setw(8) << id << left << setw(18) << name << left
              << setw(7) << age << left << setw(10) << book;
-        cout << endl;
-
+        cout << "\n---------------------------------------------" << endl;
       } else {
         continue;
       }
