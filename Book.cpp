@@ -50,7 +50,7 @@ void Book::borrow_book() {
   }
   int bookcode, memcode, mage;
   bool found = false, filecheck;
-  string mbook, bookcheck = "Nill";
+  string mbook, bookcheck = "Nil";
 
   cout << "\nEnter code of book intending to borrow for 3 hours (Limit 1 per "
           "user) ";
@@ -114,7 +114,7 @@ void Book::borrow_book() {
               // Student
               if ((memid < 5000 && bookcode < 5000) ||
                   (memid >= 5000 && bookcode >= 5000)) {
-                // Checking if User has no Book Borrowed Previously i.e. Nill
+                // Checking if User has no Book Borrowed Previously i.e. Nil
                 if (mbook.compare(bookcheck) == 0) {
                   cout << "Member Found!" << endl;
                   cout << "\nMember " << memid << "\nName: " << memname << endl;
@@ -187,7 +187,7 @@ void Book::return_book() {
   ifstream book_file;
   book_file.open("Book.txt");
 
-  string membook, bookcheck = "Nill";
+  string membook, bookcheck = "Nil";
 
   bool filecheck, found = false;
   int memage;
@@ -232,7 +232,7 @@ void Book::return_book() {
               if (membook.compare(name) == 0) {
                 count++;  // Increment by 1 for Quantity
                 cout << "\nBook returned" << endl;
-                membook = bookcheck;  // Reset User Borrowed Book to Nill
+                membook = bookcheck;  // Reset User Borrowed Book to Nil
               }
 
               // Store Data in Temp File

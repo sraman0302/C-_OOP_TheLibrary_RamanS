@@ -1,5 +1,4 @@
 #include "Undergraduate.h"
-string Undergraduate::get_stdname() { return name; }
 void Undergraduate::stddisplay() {
   ifstream input_file;
   input_file.open("Members.txt");

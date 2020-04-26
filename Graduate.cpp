@@ -1,5 +1,4 @@
 #include "Graduate.h"
-string Graduate::get_gradname() { return name; }
 void Graduate::grad_display() {
   ifstream input_file;
 

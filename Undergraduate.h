@@ -3,9 +3,7 @@
 #include "Member.h"
 
 class Undergraduate : public Member {
- 
  public:
-  string get_stdname();
   void stddisplay();
   void edit_std();
   void remove_member();

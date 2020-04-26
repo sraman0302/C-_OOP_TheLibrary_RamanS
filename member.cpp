@@ -23,7 +23,7 @@ void Member::input() {
       // Entered Info sent to Members file
       ofile << name;
       ofile << "\t";
-      ofile << "Nill\t";
+      ofile << "Nil\t";
       ofile << id;
       ofile << " ";
       ofile << age;
@@ -124,7 +124,6 @@ vector<int> Member::operator+(const Member& member) {
   }
   return membersID;
 }
-string Member::get_name() { return name; }  // Returns Name
 int Member::member_count() {
   return count;
 }  // Returns Static Variable when Required

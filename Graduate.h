@@ -2,8 +2,7 @@
 #define GRADUATE_H_INCLUDED
 #include "Member.h"
 class Graduate : public Member {
-  public:
-  string get_gradname();
+ public:
   void grad_display();
   void edit_grad();
   void remove_gradmember();

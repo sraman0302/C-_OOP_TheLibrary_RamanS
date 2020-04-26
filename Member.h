@@ -15,15 +15,14 @@ class Member {
  protected:
   string name, book;
   int age, id;
-  vector<int> membersID{};
+  vector<int> membersID;
 
  private:
   static int count;
 
  public:
-  string get_name();
   void set_ID();
-  void display();
+  virtual void display();
   virtual void input();
   vector<int> operator+(const Member& members);
   static int member_count();
