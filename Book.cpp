@@ -1,21 +1,29 @@
 #include "Book.h"
 
-vector<int> Book::operator+(const Book& book) {
+void Book::display() {
   ifstream input_file;
   input_file.open("Book.txt");
+
+  cout << "=======================================================" << endl;
+  cout << "ID\t BOOK TITLE\t\tAUTHOR\t\tQUANTITY" << endl;
+  cout << "=======================================================" << endl;
+
   if (input_file) {
     while (!input_file.eof()) {
       getline(input_file, name, '\t');
       getline(input_file, author, '\t');
       input_file >> id >> count;
-
-      bookID.push_back(id);
+      cout << left << setw(10) << id << left << setw(22) << name << left
+           << setw(19) << author << left << setw(10) << count;
+      cout << "\n-------------------------------------------------------"
+           << endl;
     }
+    input_file.close();
   } else {
     throw runtime_error("\nError! Unable to open Essential files\n ");
   }
-  return bookID;
 }
+
 void Book::borrow_book() {
   cout << "\nDo you want to display the books available at the Library?(y/n)";
   char ch;
@@ -231,87 +239,6 @@ void Book::return_book() {
   }
 }
 
-void Book::remove_book() {
-  char ch;
-  cout << "Do you want to display the list books? (y,n)";
-  cin >> ch;
-  cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-  if (ch == 'y') {
-    display();
-  }
-  cout << "\nEnter code of book intending to delete from database: ";
-  int bookcode;
-  cin >> bookcode;
-  bool filecheck;
-  ofstream temp1;
-  temp1.open("temp.txt");
-  ifstream input_file;
-  input_file.open("Book.txt");
-  if (input_file) {
-    if (temp1) {
-      filecheck = true;
-    }
-  }
-
-  if (filecheck) {
-    while (!input_file.eof()) {
-      getline(input_file, name, '\t');
-      getline(input_file, author, '\t');
-      input_file >> id >> count;
-      if (id == bookcode) {
-        cout << "\nFound." << endl;
-        cout << "Book ID: " << id << endl;
-        cout << "Title: " << name << endl;
-        cout << "Do you want to Erase this Book from the library? (This "
-                "process cannot be reversed)(y/n)";
-        cin >> ch;
-        if (ch == 'y') {
-          cout << name << " Erased from Library" << endl;
-          continue;
-        }
-      }
-      temp1 << name;
-      temp1 << "\t";
-      temp1 << author;
-      temp1 << "\t";
-      temp1 << id;
-      temp1 << " ";
-      temp1 << count;
-    }
-    input_file.close();
-    temp1.close();
-    remove("Book.txt");
-    rename("temp.txt", "Book.txt");
-  } else {
-    throw runtime_error("\nError! Unable to open Essential files\n ");
-  }
-}
-
-void Book::display() {
-  ifstream input_file;
-  input_file.open("Book.txt");
-
-  cout << "=======================================================" << endl;
-  cout << "ID\t BOOK TITLE\t\tAUTHOR\t\tQUANTITY" << endl;
-  cout << "=======================================================" << endl;
-
-  if (input_file) {
-    while (!input_file.eof()) {
-      getline(input_file, name, '\t');
-      getline(input_file, author, '\t');
-      input_file >> id >> count;
-      cout << left << setw(10) << id << left << setw(22) << name << left
-           << setw(19) << author << left << setw(10) << count;
-      cout << "\n-------------------------------------------------------"
-           << endl;
-    }
-    input_file.close();
-  } else {
-    throw runtime_error("\nError! Unable to open Essential files\n ");
-  }
-}
-
 void Book::input() {
   ofstream ofile;
   ofile.open("Book.txt", ios::app);
@@ -378,4 +305,78 @@ void Book::set_BookID() {
     }
     break;
   }
+}
+
+void Book::remove_book() {
+  char ch;
+  cout << "Do you want to display the list books? (y,n)";
+  cin >> ch;
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+  if (ch == 'y') {
+    display();
+  }
+  cout << "\nEnter code of book intending to delete from database: ";
+  int bookcode;
+  cin >> bookcode;
+  bool filecheck;
+  ofstream temp1;
+  temp1.open("temp.txt");
+  ifstream input_file;
+  input_file.open("Book.txt");
+  if (input_file) {
+    if (temp1) {
+      filecheck = true;
+    }
+  }
+
+  if (filecheck) {
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, author, '\t');
+      input_file >> id >> count;
+      if (id == bookcode) {
+        cout << "\nFound." << endl;
+        cout << "Book ID: " << id << endl;
+        cout << "Title: " << name << endl;
+        cout << "Do you want to Erase this Book from the library? (This "
+                "process cannot be reversed)(y/n)";
+        cin >> ch;
+        if (ch == 'y') {
+          cout << name << " Erased from Library" << endl;
+          continue;
+        }
+      }
+      temp1 << name;
+      temp1 << "\t";
+      temp1 << author;
+      temp1 << "\t";
+      temp1 << id;
+      temp1 << " ";
+      temp1 << count;
+    }
+    input_file.close();
+    temp1.close();
+    remove("Book.txt");
+    rename("temp.txt", "Book.txt");
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
+  }
+}
+
+vector<int> Book::operator+(const Book& book) {
+  ifstream input_file;
+  input_file.open("Book.txt");
+  if (input_file) {
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, author, '\t');
+      input_file >> id >> count;
+
+      bookID.push_back(id);
+    }
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
+  }
+  return bookID;
 }

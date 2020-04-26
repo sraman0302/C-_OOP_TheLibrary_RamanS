@@ -10,14 +10,14 @@ class Book {
   int id;
 
  public:
-  vector<int> operator+(const Book& book);
-  void borrow_book();
-  friend void edit_book(Book book);
-  void remove_book();
-  void return_book();
   void display();
+  void borrow_book();
+  void return_book();
   void input();
   void set_BookID();
+  void remove_book();
+  friend void edit_book(Book book);
+  vector<int> operator+(const Book& book);
 };
 
 #endif  // BOOK_H_INCLUDED
