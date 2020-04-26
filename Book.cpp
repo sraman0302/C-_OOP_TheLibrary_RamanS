@@ -1,8 +1,10 @@
 #include "Book.h"
-
+// Book Menu
 void Book::display() {
   ifstream input_file;
   input_file.open("Book.txt");
+
+  // Display Format
 
   cout << "=======================================================" << endl;
   cout << "ID\t BOOK TITLE\t\tAUTHOR\t\tQUANTITY" << endl;
@@ -10,9 +12,14 @@ void Book::display() {
 
   if (input_file) {
     while (!input_file.eof()) {
+      // Retrieve Prior Information from .txt File
+
       getline(input_file, name, '\t');
       getline(input_file, author, '\t');
       input_file >> id >> count;
+
+      // Adequate Spacing being made for better Tabular Representation
+
       cout << left << setw(10) << id << left << setw(22) << name << left
            << setw(19) << author << left << setw(10) << count;
       cout << "\n-------------------------------------------------------"
@@ -32,16 +39,17 @@ void Book::borrow_book() {
 
   if (ch == 'y') {
     cout << "\nDisplaying the available books for reference" << endl;
-    display();
+    display();  // Calls The Display Function
   }
-  int bookcode, memcode, mid, mage;
+  int bookcode, memcode, mage;
   bool found = false, filecheck;
-  string mname, mbook, bookcheck = "Nill";
+  string mbook, bookcheck = "Nill";
+
   cout << "\nEnter code of book intending to borrow for 3 hours (Limit 1 per "
           "user) ";
-
   cin >> bookcode;
   cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
   ofstream temp1;
   temp1.open("temp1.txt");
 
@@ -66,9 +74,11 @@ void Book::borrow_book() {
 
   if (filecheck) {
     while (!book_file.eof()) {
+      // Retrieve Information
       getline(book_file, name, '\t');
       getline(book_file, author, '\t');
       book_file >> id >> count;
+      // Check ID Match
       if (id == bookcode) {
         found = true;
         if (count > 0) {
@@ -77,52 +87,61 @@ void Book::borrow_book() {
           cout << "\nDo you want to borrow " << name << " ?";
           cin >> ch;
           cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        } else {
+        } else {  // If Count is Zero. Book Cannot Be Borrowed
           cout << "\nBook out of stock" << endl;
           break;
         }
         if (ch == 'y') {
-          count--;
           cout << "Enter Member ID: ";
           cin >> memcode;
           cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+          // Retrieve Information
           while (!member_file.eof()) {
-            getline(member_file, mname, '\t');
+            getline(member_file, memname, '\t');
             getline(member_file, mbook, '\t');
-            member_file >> mid >> mage;
-            if (memcode == mid) {
-              if ((mid < 5000 && bookcode < 5000) ||
-                  (mid >= 5000 && bookcode >= 5000)) {
+            member_file >> memid >> mage;
+            // Member ID Matches
+            if (memcode == memid) {
+              // Check if Book would be borrowed to adequate Classmen/Degree
+              // Student
+              if ((memid < 5000 && bookcode < 5000) ||
+                  (memid >= 5000 && bookcode >= 5000)) {
+                // Checking if User has no Book Borrowed Previously i.e. Nill
                 if (mbook.compare(bookcheck) == 0) {
                   cout << "Member Found!" << endl;
-                  cout << "\nMember " << mid << "\nName: " << mname << endl;
-                  cout << "\nBook : " << name << " has been issued to " << mname
-                       << endl;
-                  mbook = name;
-                } else {
-                  cout << mname << " has already borrowed " << mbook << endl;
-                  count++;
+                  cout << "\nMember " << memid << "\nName: " << memname << endl;
+                  cout << "\nBook : " << name << " has been issued to "
+                       << memname << endl;
+                  count--;  // Decrease Count Value by 1
+
+                  mbook = name;  // Storing Book name to Member Book to be saved
+                                 // Later
+                } else {         // User has a book borrowed
+                  cout << memname << " has already borrowed " << mbook << endl;
                   cout << "Please return " << mbook << " to rent " << name
                        << " for 3 hours." << endl;
                 }
               } else {
                 cout << "\nBook reserved for alternate degree seeking student."
-                     << endl;
-                count++;
+                     << endl;  // If book,member ID is out of bound
               }
             }
-            temp2 << mname;
+            // Store Member ID Regardless
+            temp2 << memname;
             temp2 << "\t";
             temp2 << mbook;
             temp2 << "\t";
-            temp2 << mid;
+            temp2 << memid;
             temp2 << " ";
             temp2 << mage;
           }
         }
+        // Close Member and Member-Temp File
         member_file.close();
         temp2.close();
       }
+      // Store Book Data Regardless
       temp1 << name;
       temp1 << "\t";
       temp1 << author;
@@ -131,18 +150,21 @@ void Book::borrow_book() {
       temp1 << " ";
       temp1 << count;
     }
+    // Book and Temp Book File Closed
+    book_file.close();
+    temp1.close();
+    // Delete Previous Member and Book Files
+    remove("Members.txt");
+    remove("Book.txt");
+    // Rename Temp as it holds new Information for Book and Member
+    rename("temp1.txt", "Book.txt");
+    rename("temp2.txt", "Members.txt");
+    if (!found) {
+      cout << "\nUser Not Found" << endl;
+    }
   } else {
     throw runtime_error("\nError! Unable to open Essential files\n ");
   }
-  if (!found) {
-    cout << "\nUser Not Found" << endl;
-  }
-  book_file.close();
-  temp1.close();
-  remove("Members.txt");
-  remove("Book.txt");
-  rename("temp1.txt", "Book.txt");
-  rename("temp2.txt", "Members.txt");
 }
 
 void Book::return_book() {
@@ -158,17 +180,17 @@ void Book::return_book() {
   ifstream book_file;
   book_file.open("Book.txt");
 
-  string memname, membook, bookcheck = "Nill";
+  string membook, bookcheck = "Nill";
 
   bool filecheck, found = false;
-  int memid, memage;
+  int memage;
   char ch;
 
   int member_id;
   cout << "Enter 4-digit code of user initiate return process: ";
   cin >> member_id;
   cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
+  // File Status Check
   if (book_file.is_open()) {
     if (member_file.is_open()) {
       if (temp1.is_open()) {
@@ -181,26 +203,32 @@ void Book::return_book() {
 
   if (filecheck) {
     while (!member_file.eof()) {
+      // Retrieve Data
       getline(member_file, memname, '\t');
       getline(member_file, membook, '\t');
       member_file >> memid >> memage;
+      // If Match
       if (memid == member_id) {
         found = true;
+        // Check if User Has a Book Borrowed
         if (membook.compare(bookcheck) != 0) {
           cout << "\nMember: " << memname << " borrowed " << membook << endl;
           cout << "Return " << membook << " ?(y/n) ";
           cin >> ch;
           if (ch == 'y') {
+            // Load Book Data
             while (!book_file.eof()) {
               getline(book_file, name, '\t');
               getline(book_file, author, '\t');
               book_file >> id >> count;
+              // Match Book Name in Library and User Borrowed Book
               if (membook.compare(name) == 0) {
-                count++;
+                count++;  // Increment by 1 for Quantity
                 cout << "\nBook returned" << endl;
-                membook = bookcheck;
+                membook = bookcheck;  // Reset User Borrowed Book to Nill
               }
 
+              // Store Data in Temp File
               temp1 << name;
               temp1 << "\t";
               temp1 << author;
@@ -218,6 +246,7 @@ void Book::return_book() {
           cout << "\n" << memname << " not issued any book" << endl;
         }
       }
+      // Store Member Data in Temp
       temp2 << memname;
       temp2 << "\t";
       temp2 << membook;
@@ -230,12 +259,12 @@ void Book::return_book() {
     member_file.close();
     remove("Members.txt");
     rename("temp2.txt", "Members.txt");
+
+    if (!found) {
+      cout << "\nUser Not Found" << endl;
+    }
   } else {
     throw runtime_error("\nError! Unable to open Essential files\n ");
-  }
-
-  if (!found) {
-    cout << "\nUser Not Found" << endl;
   }
 }
 
@@ -258,7 +287,7 @@ void Book::input() {
       cout << "\nEnter Quantity: ";
       cin >> count;
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
+      // Store Data in Book File
       ofile << name;
       ofile << "\t";
       ofile << author;
@@ -275,20 +304,22 @@ void Book::input() {
 }
 void Book::set_BookID() {
   srand(time(nullptr));
+  // Operator Overloading
   Book b1, b2;
   vector<int> IDs;
   IDs = b1 + b2;
 
   while (true) {
     cout << "Is the following book intended for an undergraduate student "
-            "(y/n): ";
+            "(u/g): ";
     char ch;
     cin >> ch;
+    ch = tower(ch);  // Support U/G Entry
     while (true) {
-      if (ch == 'y') {
+      if (ch == 'u') {
         id = rand() % 4000 + 1000;
 
-      } else if (ch == 'n') {
+      } else if (ch == 'g') {
         id = rand() % 5000 + 5000;
       } else {
         cout << "Invalid Choice.";
@@ -296,11 +327,11 @@ void Book::set_BookID() {
       int i, found = 0, n = IDs.size();
       for (i = 0; i < n; i++) {
         if (id == IDs[i]) {
-          found = 1;
+          found = 1;  // Reiterates if Duplication is Found
         }
       }
       if (found == 0 || n == 0) {
-        break;
+        break;  // Breaks if ID is Unique
       }
     }
     break;
@@ -314,16 +345,19 @@ void Book::remove_book() {
   cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
   if (ch == 'y') {
-    display();
+    display();  // Display Function Called
   }
   cout << "\nEnter code of book intending to delete from database: ";
   int bookcode;
   cin >> bookcode;
   bool filecheck;
+
   ofstream temp1;
   temp1.open("temp.txt");
+
   ifstream input_file;
   input_file.open("Book.txt");
+  // File Status Check
   if (input_file) {
     if (temp1) {
       filecheck = true;
@@ -343,10 +377,12 @@ void Book::remove_book() {
                 "process cannot be reversed)(y/n)";
         cin >> ch;
         if (ch == 'y') {
+          // Skips Iteration if Remove
           cout << name << " Erased from Library" << endl;
           continue;
         }
       }
+      // Store Regardless
       temp1 << name;
       temp1 << "\t";
       temp1 << author;
@@ -369,6 +405,7 @@ vector<int> Book::operator+(const Book& book) {
   input_file.open("Book.txt");
   if (input_file) {
     while (!input_file.eof()) {
+      // Retrieve Data
       getline(input_file, name, '\t');
       getline(input_file, author, '\t');
       input_file >> id >> count;

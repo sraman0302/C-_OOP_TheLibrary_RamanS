@@ -3,11 +3,9 @@
 #include "Member.h"
 class Book {
  private:
-  string name;
-  string author;
-  int count;
+  string name, author, memname;
+  int id, memid, count;
   vector<int> bookID;
-  int id;
 
  public:
   void display();
