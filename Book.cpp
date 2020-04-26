@@ -160,7 +160,7 @@ void Book::borrow_book() {
     rename("temp1.txt", "Book.txt");
     rename("temp2.txt", "Members.txt");
     if (!found) {
-      cout << "\nUser Not Found" << endl;
+      cout << "\n\t\tRecord Not Found" << endl;
     }
   } else {
     throw runtime_error("\nError! Unable to open Essential files\n ");
@@ -314,7 +314,7 @@ void Book::set_BookID() {
             "(u/g): ";
     char ch;
     cin >> ch;
-    ch = tower(ch);  // Support U/G Entry
+    ch = tolower(ch);  // Support U/G Entry
     while (true) {
       if (ch == 'u') {
         id = rand() % 4000 + 1000;
@@ -323,6 +323,10 @@ void Book::set_BookID() {
         id = rand() % 5000 + 5000;
       } else {
         cout << "Invalid Choice.";
+        cout << "Enter U/G only";
+        cin >> ch;
+        ch = tolower(ch);
+        continue;
       }
       int i, found = 0, n = IDs.size();
       for (i = 0; i < n; i++) {

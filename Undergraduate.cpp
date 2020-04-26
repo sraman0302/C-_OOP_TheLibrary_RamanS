@@ -173,6 +173,7 @@ void Undergraduate::remove_member() {
                 "be reversed(y/n): ";
         cin >> ch;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        ch = tolower(ch);
       }
       if (ch == 'y') {
         cout << "Record Erased" << endl;

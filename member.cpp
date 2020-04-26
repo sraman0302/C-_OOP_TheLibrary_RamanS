@@ -64,8 +64,9 @@ void Member::set_ID() {
 
       } else {
         cout << "Invalid Choice. u/g only";
-        id = 0;  // Set ID to zero to avoid entering ID to file
-        break;
+        cout << "Enter U/G only: ";
+        cin >> ch;
+        ch = tolower(ch);
       }
       int i, found = 0, n = ID_check.size();
 

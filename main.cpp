@@ -172,6 +172,7 @@ int main(void) {
         b.display();
       } else if (bookch == 2) {
         b.borrow_book();
+        remove("temp2.txt");
       } else if (bookch == 3) {
         b.return_book();
         remove("temp.txt");
