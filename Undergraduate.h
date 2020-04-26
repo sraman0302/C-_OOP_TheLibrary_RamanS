@@ -3,9 +3,7 @@
 #include "Member.h"
 
 class Undergraduate : public Member {
- private:
-  vector<int> undermem;
-
+ 
  public:
   string get_stdname();
   void stddisplay();

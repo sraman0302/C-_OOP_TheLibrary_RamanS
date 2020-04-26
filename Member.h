@@ -13,7 +13,7 @@
 using namespace std;
 class Member {
  protected:
-  string name;
+  string name, book;
   int age, id;
   vector<int> membersID{};
 

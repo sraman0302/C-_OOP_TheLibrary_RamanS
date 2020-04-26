@@ -2,9 +2,12 @@
 string Undergraduate::get_stdname() { return name; }
 void Undergraduate::stddisplay() {
   ifstream input_file;
-  string book;
   input_file.open("Members.txt");
+
+  // Display Format
+  cout << "***********************************************" << endl;
   cout << "ID\tSTUDENT NAME\tAGE\tBook Borrowed" << endl;
+  cout << "***********************************************" << endl;
   if (input_file) {
     while (!input_file.eof()) {
       getline(input_file, name, '\t');
@@ -30,7 +33,6 @@ void Undergraduate::edit_std() {
   bool filecheck, found = false;
 
   ifstream input_file;
-  string book;
   input_file.open("Members.txt");
 
   cout << "Enter ID of UNDERGRADUATE student:";
@@ -120,7 +122,6 @@ void Undergraduate::remove_member() {
   cout << "Enter ID of undergraduate student to be deleted:";
   cin >> getid;
   ifstream input_file;
-  string book;
   if (getid >= 5000) {
     cout << "Incorrect Section" << endl;
   }

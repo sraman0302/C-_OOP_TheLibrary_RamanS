@@ -2,10 +2,7 @@
 #define GRADUATE_H_INCLUDED
 #include "Member.h"
 class Graduate : public Member {
- private:
-  vector<string> gradmem;
-
- public:
+  public:
   string get_gradname();
   void grad_display();
   void edit_grad();
