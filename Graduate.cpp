@@ -19,6 +19,8 @@ void Graduate::grad_display() {
       }
     }
     input_file.close();
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 }
 
@@ -106,7 +108,7 @@ void Graduate::edit_grad() {
     remove("Members.txt");
     rename("Temp.txt", "Members.txt");
   } else {
-    cout << "Error. Try again later" << endl;
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
   if (!found) {
     cout << "Record not Found." << endl;
@@ -156,13 +158,15 @@ void Graduate::remove_gradmember() {
         temp_file << age;
       }
     }
+    input_file.close();
+    temp_file.close();
+    remove("Members.txt");
+    rename("Temp.txt", "Members.txt");
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 
-  input_file.close();
-  temp_file.close();
   if (!found) {
     cout << "Record Not Found" << endl;
   }
-  remove("Members.txt");
-  rename("Temp.txt", "Members.txt");
 }

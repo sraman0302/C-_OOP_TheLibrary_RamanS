@@ -11,6 +11,8 @@ vector<int> Book::operator+(const Book& book) {
 
       bookID.push_back(id);
     }
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
   return bookID;
 }
@@ -122,7 +124,7 @@ void Book::borrow_book() {
       temp1 << count;
     }
   } else {
-    cout << "Error. Try again Later." << endl;
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
   if (!found) {
     cout << "\nUser Not Found" << endl;
@@ -221,7 +223,7 @@ void Book::return_book() {
     remove("Members.txt");
     rename("temp2.txt", "Members.txt");
   } else {
-    cout << "Error. Try again later" << endl;
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 
   if (!found) {
@@ -281,6 +283,8 @@ void Book::remove_book() {
     temp1.close();
     remove("Book.txt");
     rename("temp.txt", "Book.txt");
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 }
 
@@ -304,7 +308,7 @@ void Book::display() {
     }
     input_file.close();
   } else {
-    cout << "Error" << endl;
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 }
 
@@ -338,6 +342,8 @@ void Book::input() {
 
       ofile.close();
     }
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 }
 void Book::set_BookID() {

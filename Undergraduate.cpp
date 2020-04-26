@@ -22,6 +22,8 @@ void Undergraduate::stddisplay() {
       }
     }
     input_file.close();
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 }
 
@@ -108,7 +110,7 @@ void Undergraduate::edit_std() {
     remove("Members.txt");
     rename("Temp.txt", "Members.txt");
   } else {
-    cout << "Error. Try again later" << endl;
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
   if (!found) {
     cout << "Record not Found." << endl;
@@ -157,13 +159,15 @@ void Undergraduate::remove_member() {
         temp_file << age;
       }
     }
+    input_file.close();
+    temp_file.close();
+    remove("Members.txt");
+    rename("Temp.txt", "Members.txt");
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 
-  input_file.close();
-  temp_file.close();
   if (!found) {
     cout << "Record Not Found" << endl;
   }
-  remove("Members.txt");
-  rename("Temp.txt", "Members.txt");
 }

@@ -35,8 +35,7 @@ void Member::input() {
     }
     ofile.close();
   } else {
-    cout << "Error" << endl;
-    ofile.close();
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 }
 
@@ -105,7 +104,7 @@ void Member::display() {
     }
     input_file.close();
   } else {
-    cout << "Error" << endl;
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
 }
 vector<int> Member::operator+(const Member& member) {
@@ -119,6 +118,8 @@ vector<int> Member::operator+(const Member& member) {
       input_file >> id >> age;
       membersID.push_back(id);
     }
+  } else {
+    throw runtime_error("\nError! Unable to open Essential files\n ");
   }
   return membersID;
 }
