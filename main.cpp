@@ -142,7 +142,7 @@ int main(void) {
       cout << "Thanks for using the Library" << endl;
       cout << "New members Welcomed Today: " << count_newmembers << endl;
 
-      cout << "Exit Library " << endl;
+      cout << "Exit Library.\nBYE! " << endl;
       break;
     } else {
       cout << "Invalid choice" << endl;

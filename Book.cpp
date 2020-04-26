@@ -3,10 +3,14 @@
 vector<int> Book::operator+(const Book& book) {
   ifstream input_file;
   int ID;
-  input_file.open("Members.txt");
+  input_file.open("Book.txt");
   if (input_file) {
-    while (input_file >> ID) {
-      bookID.push_back(ID);
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, author, '\t');
+      input_file >> id >> count;
+
+      bookID.push_back(id);
     }
   }
   return bookID;
@@ -52,7 +56,10 @@ void Book::borrow_book() {
   }
 
   if (filecheck) {
-    while (book_file >> id >> name >> count >> author) {
+    while (!book_file.eof()) {
+      getline(book_file, name, '\t');
+      getline(book_file, author, '\t');
+      book_file >> id >> count;
       if (id == bookcode) {
         found = true;
         if (count > 0) {
@@ -69,7 +76,10 @@ void Book::borrow_book() {
           count--;
           cout << "Enter Member ID: ";
           cin >> memcode;
-          while (member_file >> mid >> mname >> mage >> mbook) {
+          while (!member_file.eof()) {
+            getline(member_file, mname, '\t');
+            getline(member_file, mbook, '\t');
+            member_file >> mid >> mage;
             if (memcode == mid) {
               if ((mid < 5000 && bookcode < 5000) ||
                   (mid >= 5000 && bookcode >= 5000)) {
@@ -95,27 +105,24 @@ void Book::borrow_book() {
             }
           }
 
+          temp2 << mname;
+          temp2 << "\t";
+          temp2 << mbook;
+          temp2 << "\t";
           temp2 << mid;
           temp2 << " ";
-          temp2 << mname;
-          temp2 << " ";
           temp2 << mage;
-          temp2 << " ";
-
-          temp2 << mbook;
-          temp2 << endl;
         }
         member_file.close();
         temp2.close();
       }
+      temp1 << name;
+      temp1 << "\t";
+      temp1 << author;
+      temp1 << "\t";
       temp1 << id;
       temp1 << " ";
-      temp1 << name;
-      temp1 << " ";
       temp1 << count;
-      temp1 << " ";
-      temp1 << author;
-      temp1 << endl;
     }
   } else {
     cout << "Error. Try again Later." << endl;
@@ -166,7 +173,10 @@ void Book::return_book() {
   }
 
   if (filecheck) {
-    while (member_file >> memid >> memname >> memage >> membook) {
+    while (!member_file.eof()) {
+      getline(member_file, memname, '\t');
+      getline(member_file, membook, '\t');
+      member_file >> memid >> memage;
       if (memid == member_id) {
         found = true;
         if (membook.compare(bookcheck) != 0) {
@@ -174,20 +184,23 @@ void Book::return_book() {
           cout << "Return " << membook << " ?(y/n) ";
           cin >> ch;
           if (ch == 'y') {
-            while (book_file >> id >> name >> count >> author) {
+            while (!book_file.eof()) {
+              getline(book_file, name, '\t');
+              getline(book_file, author, '\t');
+              book_file >> id >> count;
               if (membook.compare(name) == 0) {
                 count++;
                 cout << "\nBook returned" << endl;
                 membook = bookcheck;
               }
+
+              temp1 << name;
+              temp1 << "\t";
+              temp1 << author;
+              temp1 << "\t";
               temp1 << id;
               temp1 << " ";
-              temp1 << name;
-              temp1 << " ";
               temp1 << count;
-              temp1 << " ";
-              temp1 << author;
-              temp1 << endl;
             }
             temp1.close();
             book_file.close();
@@ -198,14 +211,13 @@ void Book::return_book() {
           cout << "\nMember not issued any book" << endl;
         }
       }
+      temp2 << memname;
+      temp2 << "\t";
+      temp2 << membook;
+      temp2 << "\t";
       temp2 << memid;
       temp2 << " ";
-      temp2 << memname;
-      temp2 << " ";
       temp2 << memage;
-      temp2 << " ";
-      temp2 << membook;
-      temp2 << endl;
     }
     temp2.close();
     member_file.close();
@@ -243,7 +255,10 @@ void Book::remove_book() {
   }
 
   if (filecheck) {
-    while (input_file >> id >> name >> count >> author) {
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, author, '\t');
+      input_file >> id >> count;
       if (id == bookcode) {
         cout << "\nFound." << endl;
         cout << "Book ID: " << id << endl;
@@ -256,14 +271,13 @@ void Book::remove_book() {
           continue;
         }
       }
+      temp1 << name;
+      temp1 << "\t";
+      temp1 << author;
+      temp1 << "\t";
       temp1 << id;
       temp1 << " ";
-      temp1 << name;
-      temp1 << " ";
       temp1 << count;
-      temp1 << " ";
-      temp1 << author;
-      temp1 << endl;
     }
     input_file.close();
     temp1.close();
@@ -276,12 +290,19 @@ void Book::display() {
   ifstream input_file;
   input_file.open("Book.txt");
 
-  cout << "====================================" << endl;
-  cout << "ID\t BOOK TITLE\tQUANTITY\tAUTHOR" << endl;
-  cout << "====================================" << endl;
+  cout << "=======================================================" << endl;
+  cout << "ID\t BOOK TITLE\t\tAUTHOR\t\tQUANTITY" << endl;
+  cout << "=======================================================" << endl;
+
   if (input_file) {
-    while (input_file >> id >> name >> count >> author) {
-      cout << id << '\t' << name << '\t' << count << '\t' << author << '\n';
+    while (!input_file.eof()) {
+      getline(input_file, name, '\t');
+      getline(input_file, author, '\t');
+      input_file >> id >> count;
+      cout << left << setw(10) << id << left << setw(22) << name << left
+           << setw(19) << author << left << setw(10) << count;
+      cout << "\n-------------------------------------------------------"
+           << endl;
     }
     input_file.close();
   } else {
@@ -295,30 +316,38 @@ void Book::input() {
   if (ofile) {
     set_BookID();
     if (id != 0) {
-      cout << "Book ID: " << id;
+      cout << "Unique ID Code: " << id << endl;
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+      cout << "Enter Book Title:";
+      getline(cin, name);
+
+      cout << "Enter Author's Name: ";
+
+      getline(cin, author);
+
+      cout << "\nEnter Quantity: ";
+      cin >> count;
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+      ofile << name;
+      ofile << "\t";
+      ofile << author;
+      ofile << "\t";
       ofile << id;
       ofile << " ";
-      cout << "Enter Book title:";
-      cin >> name;
-
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      ofile << name;
-      ofile << " ";
-      cout << "Enter Quantity to be stored: ";
-      cin >> count;
       ofile << count;
-      ofile << " ";
-      cout << "Enter Author Last Name: ";
-      cin >> author;
-      ofile << author;
-      ofile << " ";
-      ofile << endl;
+
+      ofile.close();
     }
   }
 }
 void Book::set_BookID() {
   srand(time(nullptr));
-  // operator+(Book);
+  Book b1, b2;
+  vector<int> IDs;
+  IDs = b1 + b2;
+
   while (true) {
     cout << "Is the following book intended for an undergraduate student "
             "(y/n): ";
@@ -333,13 +362,13 @@ void Book::set_BookID() {
       } else {
         cout << "Invalid Choice.";
       }
-      int i, found = 0, n = bookID.size();
+      int i, found = 0, n = IDs.size();
       for (i = 0; i < n; i++) {
-        if (id == bookID[i]) {
+        if (id == IDs[i]) {
           found = 1;
         }
       }
-      if (found == 0 || bookID.size() == 0) {
+      if (found == 0 || n == 0) {
         break;
       }
     }

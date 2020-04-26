@@ -8,7 +8,10 @@ void Member::set_ID() {
   srand(time(nullptr));
 
   while (true) {
-    cout << "Are you an undergraduate student (y/n): ";
+    Member m1, m2;
+    vector<int> ID_check;
+    ID_check = m1 + m2;
+    cout << "Are you an undergraduate student(y / n): ";
     char ch;
     cin >> ch;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -24,14 +27,14 @@ void Member::set_ID() {
         id = 0;
         break;
       }
-      int i, found = 0, n = membersID.size();
+      int i, found = 0, n = ID_check.size();
 
       for (i = 0; i < n; i++) {
-        if (id == membersID[i]) {
+        if (id == ID_check[i]) {
           found = 1;
         }
       }
-      if (found == 0 || membersID.size() == 0) {
+      if (found == 0 || n == 0) {
         break;
       }
     }
@@ -70,7 +73,6 @@ void Member::input() {
 
       cout << "Enter your name:";
       getline(cin, name);
-      // cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
       cout << "\nEnter age: ";
       cin >> age;
@@ -82,7 +84,6 @@ void Member::input() {
       ofile << id;
       ofile << " ";
       ofile << age;
-      // ofile << "\n";
 
       ofile.close();
     } else {
