@@ -6,9 +6,15 @@ void Book::display() {
 
   // Display Format
 
-  cout << "=======================================================" << endl;
-  cout << "ID\t BOOK TITLE\t\tAUTHOR\t\tQUANTITY" << endl;
-  cout << "=======================================================" << endl;
+  cout << "===================================================================="
+          "================="
+          "===="
+       << endl;
+  cout << "ID\t\t\tBOOK TITLE\t\t\t\tAUTHOR\t\tQUANTITY" << endl;
+  cout << "===================================================================="
+          "================="
+          "===="
+       << endl;
 
   if (input_file) {
     while (!input_file.eof()) {
@@ -20,9 +26,10 @@ void Book::display() {
 
       // Adequate Spacing being made for better Tabular Representation
 
-      cout << left << setw(10) << id << left << setw(22) << name << left
-           << setw(19) << author << left << setw(10) << count;
-      cout << "\n-------------------------------------------------------"
+      cout << left << setw(10) << id << left << setw(50) << name << left
+           << setw(20) << author << left << setw(10) << count;
+      cout << "\n--------------------------------------------------------------"
+              "-------------------------"
            << endl;
     }
     input_file.close();

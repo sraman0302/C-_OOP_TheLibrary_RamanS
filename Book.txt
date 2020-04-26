@@ -1,1 +1,1 @@
-Python	Murach	2950 20
+Computer Organization	Linda Null	4419 5C++	Murach	1330 3Algorithm Learning	Alan H	6533 4Logic Programming	C.J. Hogger	6712 4
