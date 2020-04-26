@@ -17,5 +17,4 @@ class Book {
   friend void edit_book(Book book);
   vector<int> operator+(const Book& book);
 };
-
 #endif  // BOOK_H_INCLUDED
