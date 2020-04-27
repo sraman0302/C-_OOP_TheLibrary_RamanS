@@ -34,7 +34,7 @@ void edit_book(Book book) {
         // Edit Menu Option Display
         cout << "1.Edit Book Title" << endl;
         cout << "2.Edit Count" << endl;
-        cout << "3.Edit Author Last Name " << endl;
+        cout << "3.Edit Author Name " << endl;
 
         cout << "\nYour Choice: ";
         cin >> ch1;
